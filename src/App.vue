@@ -3,31 +3,48 @@ import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 
 import { promiseResolve, promiseTimeout } from '~/shared'
-import { asyncOnce } from '~/func'
+import { useAsyncOnce, useCancelableTask } from '~/func'
+import { onMounted } from 'vue'
 
 /**
- * test
+ * test useAsyncOnce
  */
-const getUserInfo1 = asyncOnce((value: any) => {
-  return promiseResolve(value, 1000)
-})
+const testUseAsyncOnce = () => {
+  const { execute: getUserInfo } = useAsyncOnce((value: any) => {
+    return promiseTimeout((resolve) => {
+      console.log(value)
+      resolve(value)
+    }, 1000)
+  })
 
-const getUserInfo = asyncOnce((value: any) => {
-  return promiseTimeout((resolve) => {
-    console.log(value)
-    resolve(value)
-  }, 1000)
-})
-
-// console.log(await promiseTimeout(1000, 'test'))
-
-getUserInfo('123')
-getUserInfo('123')
-getUserInfo('123')
-
-setTimeout(() => {
   getUserInfo('123')
-}, 1001)
+  getUserInfo('123')
+  getUserInfo('123')
+
+  setTimeout(() => {
+    getUserInfo('123')
+  }, 1001)
+}
+
+/**
+ * test useCancelableTask
+ */
+const testUseCancelTask = async () => {
+  const { execute, cancel } = useCancelableTask((value) => promiseResolve(value, 1000))
+  execute('2121').then((res) => {
+    console.log("🚀 ~ execute ~ res:", res)
+  })
+  execute('2121').then((res) => {
+    console.log(res);
+  })
+  // cancel()
+}
+
+onMounted(async () => {
+  testUseAsyncOnce()
+  // testUseCancelTask()
+})
+
 </script>
 
 <template>

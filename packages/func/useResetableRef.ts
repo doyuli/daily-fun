@@ -5,7 +5,7 @@ import { ref, reactive } from 'vue'
  * @param valueFn 初始值函数
  * @returns [state, reset]
  */
-export function useResetRefFn<T>(valueFn: () => T) {
+export function useResetableRefFn<T>(valueFn: () => T) {
   const state = ref(valueFn())
 
   const reset = () => {
@@ -21,7 +21,7 @@ export function useResetRefFn<T>(valueFn: () => T) {
  * @param clone 克隆函数 默认使用 JSON.parse(JSON.stringify(value))
  * @returns [state, reset]
  */
-export function useResetRef<T>(value: T, clone = defaultClone) {
+export function useResetableRef<T>(value: T, clone = defaultClone) {
   const _value = clone(value)
   const state = ref(_value)
 
@@ -38,13 +38,13 @@ export function useResetRef<T>(value: T, clone = defaultClone) {
  * @param clone 克隆函数 默认使用 JSON.parse(JSON.stringify(value))
  * @returns [state, reset]
  */
-export function useResetReactive<T extends object>(value: T, clone = defaultClone) {
+export function useResetableReactive<T extends object>(value: T, clone = defaultClone) {
   const _value = clone(value)
 
   const state = reactive(_value)
 
   const reset = () => {
-    Object.keys(state).forEach((key) => delete state[key])
+    Object.keys(state).forEach((key) => delete (state as any)[key])
     Object.assign(state, clone(_value))
   }
   return [state, reset]
