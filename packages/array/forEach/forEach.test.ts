@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { forEach } from './forEach'
+import { forEach } from '.'
 
 describe('forEach', () => {
   it('遍历数组并调用回调函数', () => {

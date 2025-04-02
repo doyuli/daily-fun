@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { filter } from './filter'
+import { filter } from '.'
 
 describe('filter', () => {
   const isEven = (num: number) => num % 2 === 0

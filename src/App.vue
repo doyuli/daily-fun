@@ -17,12 +17,12 @@ const testUseAsyncOnce = () => {
     }, 1000)
   })
 
-  getUserInfo('123')
-  getUserInfo('123')
-  getUserInfo('123')
+  getUserInfo('useAsyncOnce')
+  getUserInfo('useAsyncOnce')
+  getUserInfo('useAsyncOnce')
 
   setTimeout(() => {
-    getUserInfo('123')
+    getUserInfo('useAsyncOnce')
   }, 1001)
 }
 
@@ -31,18 +31,18 @@ const testUseAsyncOnce = () => {
  */
 const testUseCancelTask = async () => {
   const { execute, cancel } = useCancelableTask((value) => promiseResolve(value, 1000))
-  execute('2121').then((res) => {
+  execute('useCancelableTask').then((res) => {
     console.log("🚀 ~ execute ~ res:", res)
   })
-  execute('2121').then((res) => {
+  execute('useCancelableTask').then((res) => {
     console.log(res);
   })
-  // cancel()
+  cancel()
 }
 
 onMounted(async () => {
   testUseAsyncOnce()
-  // testUseCancelTask()
+  testUseCancelTask()
 })
 
 </script>

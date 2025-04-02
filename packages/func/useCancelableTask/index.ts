@@ -1,4 +1,4 @@
-import { NOOP } from '../shared'
+import { NOOP } from '~/shared'
 
 /**
  * 创建一个可取消的异步任务
