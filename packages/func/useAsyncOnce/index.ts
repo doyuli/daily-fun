@@ -1,9 +1,11 @@
+import type { AnyFn } from '~/shared'
+
 /**
  * 异步函数只执行一次
  * @param asyncFn 异步函数
  * @returns 异步函数
  */
-export function useAsyncOnce(asyncFn: (...args: any[]) => Promise<any>) {
+export function useAsyncOnce(asyncFn: AnyFn<Promise<any>>) {
   const map: Record<string, Promise<any>> = {}
 
   return {

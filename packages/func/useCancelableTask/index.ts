@@ -1,11 +1,11 @@
-import { NOOP } from '~/shared'
+import { NOOP, type AnyFn } from '~/shared'
 
 /**
  * 创建一个可取消的异步任务
  * @param asyncFn 异步函数
  * @returns
  */
-export function useCancelableTask(asyncFn: (...args: any[]) => Promise<any>) {
+export function useCancelableTask(asyncFn: AnyFn<Promise<any>>) {
   let _cancel = NOOP
 
   return {

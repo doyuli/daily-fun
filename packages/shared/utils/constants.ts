@@ -1,5 +1,7 @@
 export const NOOP = () => {}
 
+export const promise = Promise.resolve()
+
 export function promiseTimeout<T>(
   cb: (resolve: (value: T) => void, reject: (reason: any) => void) => void,
   ms: number,
