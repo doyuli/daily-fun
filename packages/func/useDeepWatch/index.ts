@@ -1,5 +1,5 @@
 import type { WatchSource, WatchCallback } from 'vue'
-import { watch, toValue } from 'vue'
+import { ref, reactive, watch, toValue } from 'vue'
 import { cloneDeep } from '~/shared'
 
 /**
@@ -11,22 +11,37 @@ import { cloneDeep } from '~/shared'
  */
 export const watchOldValue = <T>(
   source: WatchSource<T>,
-  callback: WatchCallback<T>,
-  options?: Parameters<typeof watch>[2],
+  callback: WatchCallback<T, T | undefined>,
+  options?: { clone?: (value: T) => T } & Parameters<typeof watch>[2],
 ) => {
+  const { clone = cloneDeep } = options || {}
+
   const val = toValue(source)
 
   if (typeof val !== 'object' || val === null) {
     return watch(source, callback, options)
   }
 
-  let oldVal = cloneDeep(val)
+  let oldVal = clone(val)
   return watch(
     source,
     (newVal, _, onCleanup) => {
       callback(newVal, oldVal, onCleanup)
-      oldVal = cloneDeep(newVal)
+      oldVal = clone(newVal)
     },
     options,
   )
 }
+
+const arr = ref([1, 2, 3])
+const obj = reactive({
+  a: 1,
+  b: 2,
+})
+
+watchOldValue(
+  () => arr,
+  (newVal, oldVal) => {
+    console.log(newVal, oldVal)
+  },
+)
