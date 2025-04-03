@@ -1,9 +1,10 @@
 import type { WatchSource, WatchCallback } from 'vue'
-import { ref, reactive, watch, toValue } from 'vue'
+import { watch, toValue } from 'vue'
 import { cloneDeep } from '~/shared'
 
 /**
- * 监听对象的旧值
+ * 使用 cloneDeep 的 watch
+ * 解决 watch object 时 newValue 和 oldValue 一致的问题
  * @param source 监听的源
  * @param callback 回调函数
  * @param options 选项
@@ -32,16 +33,3 @@ export const watchOldValue = <T>(
     options,
   )
 }
-
-const arr = ref([1, 2, 3])
-const obj = reactive({
-  a: 1,
-  b: 2,
-})
-
-watchOldValue(
-  () => arr,
-  (newVal, oldVal) => {
-    console.log(newVal, oldVal)
-  },
-)
