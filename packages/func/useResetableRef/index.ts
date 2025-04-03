@@ -1,4 +1,5 @@
 import { ref, reactive } from 'vue'
+import { cloneDeep } from '~/shared'
 
 /**
  * 创建一个可重置的 ref
@@ -21,7 +22,7 @@ export function useResetableRefFn<T>(valueFn: () => T) {
  * @param clone 克隆函数 默认使用 JSON.parse(JSON.stringify(value))
  * @returns [state, reset]
  */
-export function useResetableRef<T>(value: T, clone = defaultClone) {
+export function useResetableRef<T>(value: T, clone = cloneDeep) {
   const _value = clone(value)
   const state = ref(_value)
 
@@ -38,7 +39,7 @@ export function useResetableRef<T>(value: T, clone = defaultClone) {
  * @param clone 克隆函数 默认使用 JSON.parse(JSON.stringify(value))
  * @returns [state, reset]
  */
-export function useResetableReactive<T extends object>(value: T, clone = defaultClone) {
+export function useResetableReactive<T extends object>(value: T, clone = cloneDeep) {
   const _value = clone(value)
 
   const state = reactive(_value)
@@ -48,15 +49,4 @@ export function useResetableReactive<T extends object>(value: T, clone = default
     Object.assign(state, clone(_value))
   }
   return [state, reset]
-}
-
-/**
- * 克隆函数 默认使用 JSON.parse(JSON.stringify(value))
- * @param value
- * @returns
- */
-function defaultClone<T>(value: T): T {
-  if (value === null || typeof value !== 'object') return value
-
-  return JSON.parse(JSON.stringify(value))
 }
