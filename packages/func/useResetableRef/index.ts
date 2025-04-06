@@ -13,7 +13,7 @@ export function useResetableRefFn<T>(valueFn: () => T) {
     state.value = valueFn()
   }
 
-  return [state, reset]
+  return [state, reset] as const
 }
 
 /**
@@ -30,7 +30,7 @@ export function useResetableRef<T>(value: T, clone = cloneDeep) {
     state.value = clone(_value)
   }
 
-  return [state, reset]
+  return [state, reset] as const
 }
 
 /**
@@ -48,5 +48,5 @@ export function useResetableReactive<T extends object>(value: T, clone = cloneDe
     Object.keys(state).forEach((key) => delete (state as any)[key])
     Object.assign(state, clone(_value))
   }
-  return [state, reset]
+  return [state, reset] as const
 }
