@@ -22,7 +22,7 @@ const formData = defineModel<Record<string, any>>({
   default: () => { }
 })
 
-const selectType = ['select']
+const selectType = ['select', 'datePicker', 'timePicker']
 function getFormItemComp(item: FormItem) {
   const props: Record<string, any> = { ...item.props, formData: formData.value }
 
@@ -59,7 +59,7 @@ defineExpose({
     <el-row>
       <el-col v-for="item in formItems" :key="item.field" :span="item.span || span">
         <el-form-item :label="item.label" :prop="item.field" :rules="item.rules">
-          <component :is='getFormItemComp(item)' v-bind="item.props"></component>
+          <component :is="getFormItemComp(item)" v-bind="item.props"></component>
         </el-form-item>
       </el-col>
     </el-row>
