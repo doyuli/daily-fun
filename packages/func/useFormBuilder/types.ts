@@ -11,6 +11,6 @@ export interface FormItem {
 
 export interface DynamicsFn {
   disabled?: () => boolean
-  options?: () => unknown[]
+  options?: () => Promise<Record<string, any>[]> | Record<string, any>[]
   show?: () => boolean
 }

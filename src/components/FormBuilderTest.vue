@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { useFormBuilder, useResetableRef } from '~/func';
+import { promiseTimeout } from '~/shared'
 
 const [formData, reset] = useResetableRef<Record<string, any>>({
   name: '',
-  type: 1
+  type: 1,
+  used: 'yes'
 })
 
 const { Form } = useFormBuilder({
@@ -21,6 +23,14 @@ const { Form } = useFormBuilder({
       field: 'age',
       label: '年龄',
       type: 'input',
+      props: {
+        type: 'number'
+      },
+      dynamics: {
+        disabled() {
+          return !formData.value.name
+        }
+      },
       span: 12
     },
     {
@@ -75,20 +85,16 @@ const { Form } = useFormBuilder({
           {
             label: '乒乓球',
             value: 3
-          }
+          },
         ],
       },
       dynamics: {
         disabled() {
-          return formData.value.sex == 1
+          return formData.value.used == 'no'
         },
-        options() {
-          return formData.value.sex == 1 ? [
-            {
-              label: '足球',
-              value: 4
-            }
-          ] : []
+        async options() {
+          const ops = await getSexHobbys(formData.value.sex)
+          return ops
         },
         show() {
           return formData.value.age > 18
@@ -135,6 +141,19 @@ const { Form } = useFormBuilder({
 async function submit(validate: Function) {
   await validate()
   console.log(formData.value);
+}
+
+function getSexHobbys(value: number) {
+  return promiseTimeout<Record<string, any>[]>((resolve) => {
+    const result = []
+    if (value == 1) {
+      result.push({
+        label: '足球',
+        value: 4
+      })
+    }
+    resolve(result)
+  }, 300)
 }
 </script>
 

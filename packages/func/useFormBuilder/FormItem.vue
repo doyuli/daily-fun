@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ElFormItem } from 'element-plus'
 
-import { computed } from 'vue'
+import { ref, computed, watchEffect } from 'vue'
 
 import type { FormItem } from './types'
 import { getComponent } from './util'
@@ -14,6 +14,17 @@ const props = defineProps<Props>()
 
 const fieldValue = defineModel<any>({
   default: () => undefined
+})
+
+// 动态的 show
+const formVisible = computed(() => {
+  return props.formItem.dynamics?.show?.() ?? true
+})
+
+// 动态的 options
+const dynamicsOptions = ref<Record<string, any>[]>([])
+watchEffect(async () => {
+  dynamicsOptions.value = await props.formItem.dynamics?.options?.() || []
 })
 
 const selectType = ['select', 'datePicker', 'timePicker']
@@ -29,8 +40,7 @@ const formProps = computed(() => {
 
   // 动态的 options
   if (_props.options) {
-    const dynamicsOptions = props.formItem.dynamics?.options?.() || []
-    _props.options = [..._props.options, ...dynamicsOptions]
+    _props.options = [..._props.options, ...dynamicsOptions.value]
   }
 
   return {
@@ -38,11 +48,6 @@ const formProps = computed(() => {
     modelValue: fieldValue.value,
     'onUpdate:modelValue': (val: string) => (fieldValue.value = val)
   }
-})
-
-// 动态的 show
-const formVisible = computed(() => {
-  return props.formItem.dynamics?.show?.() ?? true
 })
 </script>
 

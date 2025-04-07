@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { ElForm, ElFormItem, ElRow, ElCol } from 'element-plus'
-import FormItemContent from "./FormItem.vue";
-
-import { h, ref } from 'vue'
-
 import type { FormItem } from './types'
-import { getComponent } from './util'
+import { ElForm, ElRow, ElCol } from 'element-plus'
+import { ref } from 'vue'
+
+import FormItemContent from "./FormItem.vue";
 
 interface Props {
   formItems: FormItem[],
@@ -22,26 +20,6 @@ const formRef = ref()
 const formData = defineModel<Record<string, any>>({
   default: () => { }
 })
-
-const selectType = ['select', 'datePicker', 'timePicker']
-function getFormItemComp(item: FormItem) {
-  const props: Record<string, any> = { ...item.props, formData: formData.value }
-
-  const tag = getComponent(item.type)
-
-  if (!('placeholder' in props)) {
-    props.placeholder = selectType.includes(item.type) ? '请选择' : '请输入'
-  }
-
-  return () => h(
-    tag,
-    {
-      ...props,
-      modelValue: formData.value[item.field],
-      'onUpdate:modelValue': (val: string) => (formData.value[item.field] = val)
-    },
-  )
-}
 
 /**
  * 验证表单
