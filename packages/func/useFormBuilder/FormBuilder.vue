@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ElForm, ElFormItem, ElRow, ElCol } from 'element-plus'
+import FormItemContent from "./FormItem.vue";
 
 import { h, ref } from 'vue'
 
@@ -58,9 +59,7 @@ defineExpose({
   <el-form ref="formRef" :model="formData" :rules="rules" v-bind="formConfig">
     <el-row>
       <el-col v-for="item in formItems" :key="item.field" :span="item.span || span">
-        <el-form-item :label="item.label" :prop="item.field" :rules="item.rules">
-          <component :is="getFormItemComp(item)" v-bind="item.props"></component>
-        </el-form-item>
+        <FormItemContent v-model="formData[item.field]" :formItem="item" />
       </el-col>
     </el-row>
     <slot name="footer" v-bind="{ validate, formData }"></slot>

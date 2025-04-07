@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { useFormBuilder, useResetableRef } from '~/func';
 
+const [formData, reset] = useResetableRef<Record<string, any>>({
+  name: '',
+  type: 1
+})
+
 const { Form } = useFormBuilder({
   formConfig: {
     labelWidth: 'auto'
@@ -57,6 +62,7 @@ const { Form } = useFormBuilder({
       label: '爱好',
       type: 'checkbox',
       props: {
+        disabled: false,
         options: [
           {
             label: '篮球',
@@ -71,6 +77,22 @@ const { Form } = useFormBuilder({
             value: 3
           }
         ],
+      },
+      dynamics: {
+        disabled() {
+          return formData.value.sex == 1
+        },
+        options() {
+          return formData.value.sex == 1 ? [
+            {
+              label: '足球',
+              value: 4
+            }
+          ] : []
+        },
+        show() {
+          return formData.value.age > 18
+        }
       },
       span: 12
     },
@@ -108,11 +130,6 @@ const { Form } = useFormBuilder({
       { required: true, message: 'Please input name', trigger: 'blur' },
     ],
   }
-})
-
-const [formData, reset] = useResetableRef({
-  name: '',
-  type: 1
 })
 
 async function submit(validate: Function) {

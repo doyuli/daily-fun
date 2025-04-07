@@ -4,6 +4,13 @@ export interface FormItem {
   type: string
   props?: Record<string, any>
   rules?: Record<string, any>
+  dynamics?: DynamicsFn
   span?: number
   [key: string]: any
+}
+
+export interface DynamicsFn {
+  disabled?: () => boolean
+  options?: () => unknown[]
+  show?: () => boolean
 }
