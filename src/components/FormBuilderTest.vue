@@ -49,6 +49,9 @@ const { Form } = useFormBuilder({
             value: 2
           }
         ],
+        onChange() {
+          formData.value.hobby = undefined
+        }
       },
       span: 12
     },
