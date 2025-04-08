@@ -33,6 +33,7 @@ export class TaskScheduler {
    * @returns 返回一个promise
    */
   addTask(task: AnyFn) {
+    // return new Promise 是为了让调用者能 await 或 .then() 这个 task 的结果
     return new Promise((...args) => {
       this.tasks.push(() => promise.then(task).then(...args))
       this.run()
