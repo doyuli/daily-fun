@@ -1,12 +1,20 @@
 import { generateWatermark, type Options } from './generate'
 import { ref, h, onMounted, onUnmounted, defineComponent, type CSSProperties } from 'vue'
 
-export function useWatermark(text: string, options: Options = {}) {
-  const imageBase64 = generateWatermark(text, options)
+type WatermarkOptions = Options & { defaultText?: string }
 
+export function useWatermark(options: WatermarkOptions = {}) {
   const Watermark = defineComponent({
     name: 'Watermark',
-    setup(_, { slots }) {
+    props: {
+      text: {
+        type: String,
+        default: options.defaultText ?? 'Hello World!',
+      },
+    },
+    setup(props, { slots }) {
+      const imageBase64 = generateWatermark(props.text, options)
+
       const parentRef = ref()
 
       let div: HTMLDivElement | undefined
