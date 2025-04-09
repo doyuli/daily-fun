@@ -37,6 +37,7 @@ function transformSubOption(comp: Component, subComp: Component): Component {
   }
 }
 
-export function getComponent(type: string): Component {
+export function getComponent(type: string | Component): Component {
+  if (typeof type !== 'string') return type
   return CompMap.get(type) || ElInput
 }

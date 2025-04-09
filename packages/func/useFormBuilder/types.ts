@@ -1,9 +1,9 @@
-import type { SetupContext } from 'vue'
+import type { SetupContext, Component } from 'vue'
 
 export interface FormItem {
   label: string
   field: string
-  type: string
+  type: string | Component
   props?: Record<string, any>
   rules?: Record<string, any>
   dynamics?: DynamicsFn

@@ -31,8 +31,9 @@ const selectType = ['select', 'datePicker', 'timePicker']
 const formProps = computed(() => {
   const _props: Record<string, any> = { ...props.formItem.props }
 
-  if (!('placeholder' in _props)) {
-    _props.placeholder = selectType.includes(props.formItem.type) ? '请选择' : '请输入'
+  const { type } = props.formItem
+  if (!('placeholder' in _props) && typeof type === 'string') {
+    _props.placeholder = selectType.includes(type) ? '请选择' : '请输入'
   }
 
   // 动态的 disabled

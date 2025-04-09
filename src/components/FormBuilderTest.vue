@@ -2,6 +2,7 @@
 import { useFormBuilder, useResetableRef } from '~/func';
 import { promiseTimeout } from '~/shared'
 import { h } from 'vue'
+import { ElInput } from 'element-plus'
 
 const [formData, reset] = useResetableRef<Record<string, any>>({
   name: '',
@@ -126,6 +127,16 @@ const { Form } = useFormBuilder({
         ],
       },
       span: 12
+    },
+    {
+      field: 'remark',
+      label: '备注',
+      type: ElInput,
+      props: {
+        type: 'textarea',
+        row: 3
+      },
+      span: 24
     },
     {
       field: 'used',
