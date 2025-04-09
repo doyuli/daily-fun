@@ -1,3 +1,5 @@
+import type { SetupContext } from 'vue'
+
 export interface FormItem {
   label: string
   field: string
@@ -5,6 +7,7 @@ export interface FormItem {
   props?: Record<string, any>
   rules?: Record<string, any>
   dynamics?: DynamicsFn
+  slots?: SetupContext['slots']
   span?: number
   [key: string]: any
 }

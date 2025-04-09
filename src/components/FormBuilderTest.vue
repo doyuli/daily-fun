@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useFormBuilder, useResetableRef } from '~/func';
 import { promiseTimeout } from '~/shared'
+import { h } from 'vue'
 
 const [formData, reset] = useResetableRef<Record<string, any>>({
   name: '',
@@ -30,6 +31,9 @@ const { Form } = useFormBuilder({
         disabled() {
           return !formData.value.name
         }
+      },
+      slots: {
+        append: () => [h('span', '岁')],
       },
       span: 12
     },

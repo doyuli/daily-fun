@@ -53,7 +53,13 @@ const formProps = computed(() => {
 
 <template>
   <el-form-item v-if="formVisible" :label="formItem.label" :prop="formItem.field" :rules="formItem.rules">
-    <component :is="getComponent(formItem.type)" v-bind="formProps"></component>
+    <component :is="getComponent(formItem.type)" v-bind="formProps">
+      <template v-for="(slot, name) in formItem.slots" #[name]="scope">
+        <slot :name="name" v-bind="scope">
+          <component :is="slot" />
+        </slot>
+      </template>
+    </component>
   </el-form-item>
 </template>
 

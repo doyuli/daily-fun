@@ -80,7 +80,7 @@ export function useWatermark(options: WatermarkOptions = {}) {
               position: 'relative',
             },
           },
-          slots.default?.(),
+          slots,
         )
     },
   })
