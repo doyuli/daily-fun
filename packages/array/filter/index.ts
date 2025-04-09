@@ -4,7 +4,7 @@ export function filter<T>(
   thisArg?: any,
 ) {
   if (!Array.isArray(arr)) {
-    throw new TypeError('arr is not an array')
+    throw new TypeError(`Expected an array, but received ${typeof arr}`)
   }
 
   if (typeof cb !== 'function') {

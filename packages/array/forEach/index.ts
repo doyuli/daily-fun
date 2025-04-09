@@ -4,7 +4,7 @@ export function forEach<T>(
   thisArg?: unknown,
 ): void {
   if (!Array.isArray(arr)) {
-    throw new TypeError('arr is not an array')
+    throw new TypeError(`Expected an array, but received ${typeof arr}`)
   }
 
   if (typeof cb !== 'function') {
