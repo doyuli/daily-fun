@@ -3,7 +3,7 @@ import { promiseResolve } from '~/shared'
 import { useAsyncOnce } from '.'
 
 describe('useAsyncOnce', () => {
-  const mockAsyncFn = vi.fn(async (arg: number) => promiseResolve(`result_${arg}`))
+  const mockAsyncFn = vi.fn(async (arg: number) => await promiseResolve(`result_${arg}`))
 
   beforeEach(() => {
     mockAsyncFn.mockClear()
@@ -34,11 +34,11 @@ describe('useAsyncOnce', () => {
     const { execute } = useAsyncOnce(mockAsyncFn)
 
     const promise1 = execute(1)
-    await expect(promise1).resolves.toBe('result_1')
+    await expect(promise1).resolves.toEqual('result_1')
     expect(mockAsyncFn).toHaveBeenCalledTimes(1)
 
     const promise2 = execute(1)
-    await expect(promise2).resolves.toBe('result_1')
+    await expect(promise2).resolves.toEqual('result_1')
     expect(mockAsyncFn).toHaveBeenCalledTimes(2)
   })
 
