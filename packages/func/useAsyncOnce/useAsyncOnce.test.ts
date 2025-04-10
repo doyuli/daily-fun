@@ -11,8 +11,7 @@ describe('useAsyncOnce', () => {
 
   it('should execute the async function only once', async () => {
     const { execute } = useAsyncOnce(mockAsyncFn)
-    const args = [123]
-    const [promise1, promise2, promise3] = [execute(...args), execute(...args), execute(...args)]
+    const [promise1, promise2, promise3] = [execute(1), execute(1), execute(1)]
 
     expect(promise1).toBe(promise2)
     expect(promise2).toBe(promise3)
@@ -34,14 +33,12 @@ describe('useAsyncOnce', () => {
   it('should clean up the map after execution', async () => {
     const { execute } = useAsyncOnce(mockAsyncFn)
 
-    const args = [123]
-
-    const promise1 = execute(...args)
-    await expect(promise1).resolves.toBe('result_123')
+    const promise1 = execute(1)
+    await expect(promise1).resolves.toBe('result_1')
     expect(mockAsyncFn).toHaveBeenCalledTimes(1)
 
-    const promise2 = execute(...args)
-    await expect(promise2).resolves.toBe('result_123')
+    const promise2 = execute(1)
+    await expect(promise2).resolves.toBe('result_1')
     expect(mockAsyncFn).toHaveBeenCalledTimes(2)
   })
 
