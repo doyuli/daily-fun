@@ -1,15 +1,15 @@
-import { describe, expect, it, vi, beforeEach } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { ref, watch, nextTick } from 'vue'
 import { watchOldValue } from '.'
 
 describe('watch', () => {
   it('should have the same reference', async () => {
-    const morkValue = ref({ a: 1, b: 2 })
+    const state = ref({ a: 1, b: 2 })
 
     const cb = vi.fn()
 
     watch(
-      () => morkValue.value,
+      () => state.value,
       (newVal, oldVal) => {
         cb(newVal, oldVal)
       },
@@ -18,7 +18,7 @@ describe('watch', () => {
       },
     )
 
-    morkValue.value.a = 2
+    state.value.a = 2
 
     await nextTick()
 
@@ -28,12 +28,12 @@ describe('watch', () => {
 
 describe('watchOldValue', () => {
   it('should have the different reference', async () => {
-    const morkValue = ref({ a: 1, b: 2 })
+    const state = ref({ a: 1, b: 2 })
 
     const cb = vi.fn()
 
     watchOldValue(
-      () => morkValue.value,
+      () => state.value,
       (newVal, oldVal) => {
         cb(newVal, oldVal)
       },
@@ -42,7 +42,7 @@ describe('watchOldValue', () => {
       },
     )
 
-    morkValue.value.a = 2
+    state.value.a = 2
 
     await nextTick()
 
@@ -50,12 +50,12 @@ describe('watchOldValue', () => {
   })
 
   it('should used custom clone', async () => {
-    const morkValue = ref({ a: 1, b: 2 })
+    const state = ref({ a: 1, b: 2 })
 
     const cb = vi.fn()
 
     watchOldValue(
-      () => morkValue.value,
+      () => state.value,
       (newVal, oldVal) => {
         cb(newVal, oldVal)
       },
@@ -65,7 +65,7 @@ describe('watchOldValue', () => {
       },
     )
 
-    morkValue.value.a = 2
+    state.value.a = 2
 
     await nextTick()
 
