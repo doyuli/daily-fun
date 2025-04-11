@@ -28,10 +28,10 @@ describe('shuffle', () => {
   it('should generated different returns', () => {
     const arr = [1, 2, 3, 4]
 
-    // 创建对 Math.random 的监听 强制第一次返回 0.5 第二次返回 0.3
+    // 创建对 Math.random 的监听 强制第一次返回 0.5 第二次返回 0.1
     vi.spyOn(Math, 'random')
       .mockImplementationOnce(() => 0.5)
-      .mockImplementationOnce(() => 0.3)
+      .mockImplementationOnce(() => 0.1)
 
     expect(shuffle(arr)).not.toEqual(shuffle(arr))
 
