@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import { useRef, useReactive, effect } from '.'
 
-describe('useRef', () => {
+describe('useReactivity', () => {
   it('should be reactivity by useRef', async () => {
     const state = useRef<number>(1)
 
