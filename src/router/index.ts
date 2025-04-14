@@ -1,20 +1,23 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+
+/**
+ * 简单的约定式路由实现
+ */
+const modules = import.meta.glob('../views/**/index.vue')
+
+const routes = Object.entries(modules).map(([_path, component]) => {
+  const path = _path.replace('../views', '').replace('/index.vue', '') || '/'
+  const name = path.split('/').filter(Boolean).join('-') || 'index'
+  return {
+    path,
+    name,
+    component,
+  }
+})
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: HomeView,
-    },
-    {
-      path: '/form',
-      name: 'form',
-      component: () => import('../views/FormView.vue'),
-    },
-  ],
+  routes,
 })
 
 export default router
