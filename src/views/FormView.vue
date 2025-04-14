@@ -176,8 +176,8 @@ function getSexHobbys(value: number) {
 </script>
 
 <template>
-  <main style="max-width: 800px;">
-    <Form v-model="formData">
+  <section class="form-container">
+    <Form v-model="formData" style="max-width: 880px;">
       <template #footer="{ validate }">
         <div style="text-align: center;margin-top: 24px;">
           <el-button @click="submit(validate)">提交</el-button>
@@ -185,5 +185,14 @@ function getSexHobbys(value: number) {
         </div>
       </template>
     </Form>
-  </main>
+  </section>
 </template>
+
+<style scoped>
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+</style>
