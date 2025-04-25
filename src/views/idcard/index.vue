@@ -17,6 +17,8 @@ function generate(limit = 10000) {
 
   const bankSet = new Set()
 
+  const mobileSet = new Set()
+
   while (nameSet.size < limit) {
     nameSet.add(getName())
   }
@@ -29,11 +31,15 @@ function generate(limit = 10000) {
     bankSet.add(getBankno())
   }
 
+  while (mobileSet.size < limit) {
+    mobileSet.add(getMobile())
+  }
+
   // 使用 Set 的 values() 获取唯一值，并转为数组进行访问
   const nameArray = Array.from(nameSet.values())
   const idnoArray = Array.from(idnoSet.values())
   const bankArray = Array.from(bankSet.values())
-
+  const mobileArray = Array.from(mobileSet.values())
 
   const list = Array.from({ length: limit }, (_, i) => {
     const { idno, birthday, age, address, sex } = idnoArray[i]
@@ -45,7 +51,7 @@ function generate(limit = 10000) {
       age,
       address,
       sex: sex == 1 ? '男' : '女',
-      mobile: getMobile()
+      mobile: mobileArray[i]
     }
   })
 
@@ -64,6 +70,7 @@ function generatExcel() {
   worksheet.columns = [
     { header: '姓名', key: 'name', width: 15 },
     { header: '身份证号', key: 'idno', width: 20, },
+    { header: '手机号', key: 'mobile', width: 20, },
     { header: '银行卡号', key: 'bank', width: 20, }
   ];
 
