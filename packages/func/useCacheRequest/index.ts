@@ -1,5 +1,6 @@
 export interface CacheRequest {
-  matchFn: (...args: any[]) => string
+  matchFn?: (...args: any[]) => string
+  cacheTime?: number
 }
 
 function defaultCacheKey(...args: any[]) {
@@ -10,31 +11,45 @@ export function useCacheRequest(options?: CacheRequest) {
   const cache = new Map()
   const pendingRequests = new Map()
 
-  const { matchFn = defaultCacheKey } = options || {}
+  const { matchFn = defaultCacheKey, cacheTime = 3 * 60 * 1000 } = options || {}
 
-  return async function request(...args: Parameters<typeof fetch>) {
+  async function request(...args: Parameters<typeof fetch>) {
     const cacheKey = matchFn(args)
+    const _now = Date.now()
 
     if (pendingRequests.has(cacheKey)) {
       return pendingRequests.get(cacheKey)
     }
 
     if (cache.has(cacheKey)) {
-      return cache.get(cacheKey)
+      const { data, expire } = cache.get(cacheKey)
+      if (expire > _now) {
+        return data
+      }
+      cache.delete(cacheKey)
     }
 
     const promise = fetch(...args)
       .then((resp) => {
-        cache.set(cacheKey, resp)
+        cache.set(cacheKey, { data: resp, expire: _now + cacheTime })
         return resp
       })
       .catch((err) => {
         cache.delete(cacheKey)
-        return err
+        throw err
       })
 
     pendingRequests.get(cacheKey)
 
     return promise
   }
+
+  const clear = () => {
+    cache.clear()
+    pendingRequests.clear()
+  }
+
+  request.clear = clear
+
+  return request
 }
