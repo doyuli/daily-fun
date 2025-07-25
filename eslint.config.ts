@@ -29,4 +29,10 @@ export default defineConfigWithVueTs(
   },
   oxlint.configs['flat/recommended'],
   skipFormatting,
+  {
+    rules: {
+      'vue/multi-word-component-names': 'off',
+      '@typescript-eslint/no-explicit-any': 'off'
+    }
+  }
 )
