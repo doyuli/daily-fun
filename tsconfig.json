@@ -1,14 +1,14 @@
 {
-  "files": [],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
+  "compilerOptions": {
+    "target": "es2020", 
+    "lib": ["ESNext", "DOM"], 
+    "baseUrl": ".", 
+    "module": "ESNext", 
+    "moduleResolution": "Bundler", 
+    "paths": {
+      "@~/*": ["packages/*/src"] 
     },
-    {
-      "path": "./tsconfig.app.json"
-    },
-    {
-      "path": "./tsconfig.vitest.json"
-    }
-  ]
+    "resolveJsonModule": true, 
+    "strict": true, 
+  }
 }
