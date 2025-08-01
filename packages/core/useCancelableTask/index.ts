@@ -1,4 +1,4 @@
-import { noop } from '@fun/shared'
+import { noop } from '@daily-fun/shared'
 
 export function useCancelableTask<T extends any[], R>(
   asyncFn: (...args: T) => Promise<R>,

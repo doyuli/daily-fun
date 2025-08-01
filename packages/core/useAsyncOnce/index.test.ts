@@ -1,4 +1,4 @@
-import { promiseResolve, useAsyncOnce } from '@fun/core'
+import { promiseResolve, useAsyncOnce } from '@daily-fun/core'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 describe('useAsyncOnce', () => {

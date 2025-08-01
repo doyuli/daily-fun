@@ -26,16 +26,16 @@ const pluginDts = dts()
 
 const externals = [
   'vue',
-  /@fun\/.*/,
+  /@daily-fun\/.*/,
 ]
 
 const iifeGlobals = {
   'vue': 'Vue',
-  '@fun/shared': 'Fun',
-  '@fun/core': 'Fun',
+  '@daily-fun/shared': 'DailyFun',
+  '@daily-fun/core': 'DailyFun',
 }
 
-const iifeName = 'Fun'
+const iifeName = 'DailyFun'
 
 export interface Buildoptions {
   input?: string
@@ -58,7 +58,7 @@ export function createRollupConfig(options?: Buildoptions) {
 
   if (mjs !== false) {
     output.push({
-      file: `${file}.mjs`,
+      file: `dist/${file}.mjs`,
       format: 'es',
     })
   }
@@ -66,7 +66,7 @@ export function createRollupConfig(options?: Buildoptions) {
   if (iife !== false) {
     output.push(
       {
-        file: `${file}.iife.js`,
+        file: `dist/${file}.iife.js`,
         format: 'iife',
         name: iifeName,
         extend: true,
@@ -74,7 +74,7 @@ export function createRollupConfig(options?: Buildoptions) {
         plugins: [],
       },
       {
-        file: `${file}.iife.min.js`,
+        file: `dist/${file}.iife.min.js`,
         format: 'iife',
         name: iifeName,
         extend: true,
@@ -108,7 +108,7 @@ export function createRollupConfig(options?: Buildoptions) {
     configs.push({
       input,
       output: [
-        { file: `${file}.d.mts` },
+        { file: `dist/${file}.d.mts` },
       ],
       plugins: [
         pluginDts,

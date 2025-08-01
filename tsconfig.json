@@ -6,10 +6,10 @@
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "paths": {
-      "@fun/core": ["packages/core/index.ts"],
-      "@fun/core/*": ["packages/core/*"],
-      "@fun/shared": ["packages/shared/index.ts"],
-      "@fun/shared/*": ["packages/shared/*"]
+      "@daily-fun/core": ["packages/core/index.ts"],
+      "@daily-fun/core/*": ["packages/core/*"],
+      "@daily-fun/shared": ["packages/shared/index.ts"],
+      "@daily-fun/shared/*": ["packages/shared/*"]
     },
     "resolveJsonModule": true,
     "strict": true

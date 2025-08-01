@@ -1,4 +1,4 @@
-import { promiseResolve, useCancelableTask } from '@fun/core'
+import { promiseResolve, useCancelableTask } from '@daily-fun/core'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 describe('useCancelableTask', () => {

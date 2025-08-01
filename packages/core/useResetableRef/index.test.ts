@@ -1,4 +1,4 @@
-import { useResetableReactive, useResetableRef, useResetableRefFn } from '@fun/core'
+import { useResetableReactive, useResetableRef, useResetableRefFn } from '@daily-fun/core'
 import { describe, expect, it } from 'vitest'
 import { nextTick } from 'vue'
 

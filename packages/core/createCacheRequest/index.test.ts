@@ -1,4 +1,4 @@
-import { createCacheFetch, promiseResolve } from '@fun/core'
+import { createCacheFetch, promiseResolve } from '@daily-fun/core'
 import { describe, expect, it, vi } from 'vitest'
 
 describe('useCacheRequest', () => {

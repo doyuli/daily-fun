@@ -1,4 +1,4 @@
-import { jsonStringify } from '@fun/shared'
+import { jsonStringify } from '@daily-fun/shared'
 
 interface AsyncOnceOptions<T extends any[]> {
   /**

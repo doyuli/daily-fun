@@ -1,4 +1,4 @@
-import { cloneDeep } from '@fun/shared'
+import { cloneDeep } from '@daily-fun/shared'
 import { reactive, ref } from 'vue'
 
 export function useResetableRef<T>(value: T, clone = cloneDeep) {
