@@ -1,3 +1,4 @@
+export * from './createCacheRequest'
 export * from './useAsyncOnce'
 export * from './useCancelableTask'
 export * from './useResetableRef'
