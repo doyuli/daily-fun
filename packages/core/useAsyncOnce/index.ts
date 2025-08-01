@@ -12,22 +12,20 @@ export function useAsyncOnce<T extends any[], R>(
 
   const cache = new Map<string, Promise<R>>()
 
-  function execute(...args: T): Promise<R> {
-    const key = match(args)
-
-    const cached = cache.get(key)
-    if (cached)
-      return cached
-
-    const promise = asyncFn(...args).finally(() => {
-      cache.delete(key)
-    })
-    cache.set(key, promise)
-
-    return promise
-  }
-
   return {
-    execute,
+    execute: (...args: T): Promise<R> => {
+      const key = match(args)
+
+      const cached = cache.get(key)
+      if (cached)
+        return cached
+
+      const promise = asyncFn(...args).finally(() => {
+        cache.delete(key)
+      })
+      cache.set(key, promise)
+
+      return promise
+    },
   }
 }
