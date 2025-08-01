@@ -14,7 +14,7 @@ export function useCancelableTask<T extends any[], R>(
         }
 
         asyncFn(...args)
-          .then(result => resolve(result))
+          .then(resp => resolve(resp))
           .catch(error => reject(error))
           .finally(() => {
             abort = noop
