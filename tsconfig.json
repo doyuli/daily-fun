@@ -1,14 +1,17 @@
 {
   "compilerOptions": {
-    "target": "es2020", 
-    "lib": ["ESNext", "DOM"], 
-    "baseUrl": ".", 
-    "module": "ESNext", 
-    "moduleResolution": "Bundler", 
+    "target": "es2020",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "baseUrl": ".",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "paths": {
-      "@~/*": ["packages/*/src"] 
+      "@fun/core": ["packages/core/index.ts"],
+      "@fun/core/*": ["packages/core/*"],
+      "@fun/shared": ["packages/shared/index.ts"],
+      "@fun/shared/*": ["packages/shared/*"]
     },
-    "resolveJsonModule": true, 
-    "strict": true, 
+    "resolveJsonModule": true,
+    "strict": true
   }
 }
