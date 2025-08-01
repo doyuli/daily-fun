@@ -9,8 +9,9 @@
   "keywords": [],
   "main": "index.js",
   "scripts": {
-    "test": "pnpm test:unit",
     "build": "pnpm -r run build",
+    "build:watch": "pnpm -r --parallel run build --watch",
+    "test": "pnpm test:unit",
     "test:unit": "vitest --project unit",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
