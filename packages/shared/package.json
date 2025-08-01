@@ -1,0 +1,28 @@
+{
+  "name": "@fun/shared",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "@fun/shared",
+  "sideEffects": false,
+  "exports": {
+    ".": "./index.mjs",
+    "./*": "./*"
+  },
+  "main": "./index.mjs",
+  "module": "./index.mjs",
+  "unpkg": "./index.iife.min.js",
+  "jsdelivr": "./index.iife.min.js",
+  "types": "./index.d.mts",
+  "files": [
+    "*.d.mts",
+    "*.js",
+    "*.mjs"
+  ],
+  "scripts": {
+    "build": "rollup --config=rollup.config.ts --configPlugin=rollup-plugin-esbuild",
+    "prepack": "pnpm run build"
+  },
+  "peerDependencies": {
+    "vue": "^3.5.0"
+  }
+}
