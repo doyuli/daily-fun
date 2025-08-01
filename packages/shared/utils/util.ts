@@ -1,4 +1,4 @@
-export function defaultClone<T>(val: T): T {
+export function cloneDeep<T>(val: T): T {
   if (val === null || typeof val !== 'object')
     return val
   return JSON.parse(JSON.stringify(val))
