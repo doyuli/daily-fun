@@ -115,6 +115,12 @@ importers:
         specifier: 'catalog:'
         version: 3.2.4(@types/debug@4.1.12)(@types/node@22.17.0)(jsdom@26.1.0)(yaml@2.8.0)
 
+  packages/components:
+    dependencies:
+      vue:
+        specifier: ^3.5.0
+        version: 3.5.18(typescript@5.8.3)
+
   packages/core:
     dependencies:
       '@daily-fun/shared':
