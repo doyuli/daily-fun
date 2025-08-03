@@ -14,7 +14,7 @@ export default antfu(
     files: ['playground/**/*'],
     rules: {
       'no-console': 'off',
-      'pnpm/json-enforce-catalog': 'off',
+      'no-debugger': 'off',
     },
   },
 )

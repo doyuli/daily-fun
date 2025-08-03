@@ -9,6 +9,7 @@
   "keywords": [],
   "main": "index.js",
   "scripts": {
+    "play": "cd playground && pnpm dev",
     "build": "pnpm -r run build",
     "build:watch": "pnpm -r --parallel run build --watch",
     "test": "pnpm test:unit",
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:",
+    "@iconify/json": "catalog:",
     "@rollup/plugin-json": "catalog:",
     "@types/node": "catalog:",
     "eslint": "catalog:",
@@ -36,6 +38,7 @@
     "rollup-plugin-pure": "catalog:",
     "simple-git-hooks": "catalog:",
     "typescript": "catalog:",
+    "unocss": "catalog:",
     "vitest": "catalog:"
   },
   "simple-git-hooks": {

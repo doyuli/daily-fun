@@ -1,11 +1,46 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { onErrorCaptured, shallowRef } from 'vue'
+import { RouterLink, RouterView } from 'vue-router'
+
+const error = shallowRef<Error | null>(null)
+onErrorCaptured((err) => {
+  console.error('💥 Captured error at root', err)
+  error.value = err
+})
+</script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <header>
+    <nav>
+      <RouterLink to="/">
+        Home
+      </RouterLink>
+      |
+      <RouterLink to="/async-component">
+        AsyncComponent
+      </RouterLink>
+    </nav>
+  </header>
+
+  <div v-if="error">
+    <pre>{{ error }}</pre>
+  </div>
+
+  <RouterView v-slot="{ Component }">
+    <template v-if="Component">
+      <Transition mode="out-in">
+        <KeepAlive>
+          <Suspense>
+            <component :is="Component" />
+
+            <template #fallback>
+              Loading...
+            </template>
+          </Suspense>
+        </KeepAlive>
+      </Transition>
+    </template>
+  </RouterView>
 </template>
 
 <style scoped></style>
