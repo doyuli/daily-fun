@@ -10,4 +10,11 @@ export default antfu(
       '**/*.svg',
     ],
   },
+  {
+    files: ['playground/**/*'],
+    rules: {
+      'no-console': 'off',
+      'pnpm/json-enforce-catalog': 'off',
+    },
+  },
 )
