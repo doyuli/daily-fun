@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onErrorCaptured, shallowRef } from 'vue'
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
+import AppHeader from './components/AppHeader.vue'
 
 const error = shallowRef<Error | null>(null)
 onErrorCaptured((err) => {
@@ -10,17 +11,7 @@ onErrorCaptured((err) => {
 </script>
 
 <template>
-  <header>
-    <nav>
-      <RouterLink to="/">
-        Home
-      </RouterLink>
-      |
-      <RouterLink to="/async-component">
-        AsyncComponent
-      </RouterLink>
-    </nav>
-  </header>
+  <AppHeader />
 
   <div v-if="error">
     <pre>{{ error }}</pre>
