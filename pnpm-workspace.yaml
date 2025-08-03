@@ -11,7 +11,7 @@ catalog:
   '@vitejs/plugin-vue': ^6.0.1
   '@vitejs/plugin-vue-jsx': ^5.0.1
   '@vue/tsconfig': ^0.7.0
-  element-plus: ^2.10.1
+  ant-design-vue: ^4.2.6
   eslint: ^9.30.1
   eslint-plugin-format: ^1.0.1
   jsdom: ^26.1.0
@@ -27,7 +27,6 @@ catalog:
   simple-git-hooks: ^2.13.0
   typescript: ^5.8.3
   unocss: ^66.4.0
-  unplugin-element-plus: ^0.10.0
   unplugin-vue-router: ^0.14.0
   vite: ^7.0.6
   vite-plugin-vue-devtools: ^8.0.0
