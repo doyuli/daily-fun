@@ -1,9 +1,10 @@
 packages:
   - 'packages/*'
   - playground
+  - docs
 
 catalog:
-  '@antfu/eslint-config': ^4.16.2
+  '@antfu/eslint-config': ^5.0.0
   '@iconify/json': ^2.2.365
   '@rollup/plugin-json': ^6.1.0
   '@tsconfig/node20': ^20.1.3
@@ -12,7 +13,7 @@ catalog:
   '@vitejs/plugin-vue-jsx': ^5.0.1
   '@vue/tsconfig': ^0.7.0
   ant-design-vue: ^4.2.6
-  eslint: ^9.30.1
+  eslint: ^9.32.0
   eslint-plugin-format: ^1.0.1
   jsdom: ^26.1.0
   lint-staged: ^16.1.2
@@ -30,6 +31,7 @@ catalog:
   unplugin-vue-router: ^0.14.0
   vite: ^7.0.6
   vite-plugin-vue-devtools: ^8.0.0
+  vitepress: ^1.6.3
   vitest: ^3.2.4
   vue: ^3.5.13
   vue-router: ^4.5.1

@@ -9,6 +9,7 @@
   "keywords": [],
   "main": "index.js",
   "scripts": {
+    "docs": "vitepress dev docs",
     "play": "cd playground && pnpm dev",
     "build": "pnpm -r run build",
     "build:watch": "pnpm -r --parallel run build --watch",
@@ -36,6 +37,8 @@
     "simple-git-hooks": "catalog:",
     "typescript": "catalog:",
     "unocss": "catalog:",
+    "vite": "catalog:",
+    "vitepress": "catalog:",
     "vitest": "catalog:",
     "vue": "catalog:"
   },

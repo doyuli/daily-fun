@@ -30,7 +30,6 @@
     "npm-run-all2": "catalog:",
     "typescript": "catalog:",
     "unplugin-vue-router": "catalog:",
-    "vite": "catalog:",
     "vite-plugin-vue-devtools": "catalog:",
     "vue-tsc": "catalog:"
   }
