@@ -74,7 +74,7 @@ catalogs:
       version: 2.13.1
     typescript:
       specifier: ^5.8.3
-      version: 5.9.2
+      version: 5.8.3
     unocss:
       specifier: ^66.4.0
       version: 66.4.0
