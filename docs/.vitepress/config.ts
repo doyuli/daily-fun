@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress'
+import metadata from '../public/meta.json'
 import viteConfig from './vite.config'
 
 const Guide = [
@@ -10,9 +11,7 @@ const Guide = [
 
 const DefaultSideBar = Guide
 
-const FunctionsSideBar = [
-  { text: 'useResetableRef', link: '/core/useResetableRef' },
-]
+const FunctionsSideBar = getFunctionsSideBar()
 
 const sidebar = {
   '/guide/': DefaultSideBar,
@@ -59,3 +58,23 @@ export default defineConfig({
   },
   vite: viteConfig as any,
 })
+
+function getFunctionsSideBar() {
+  const links: any[] = []
+
+  const categories = metadata.functions.map(func => func.category).filter(Boolean)
+
+  for (const category of categories) {
+    const functions = metadata.functions.filter(i => i.category === category && i.md)
+
+    links.push({
+      text: category,
+      items: functions.map(i => ({
+        text: i.name,
+        link: `/${i.package}/${i.name}/`,
+      })),
+    })
+  }
+
+  return links
+}

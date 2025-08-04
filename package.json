@@ -17,6 +17,7 @@
     "test:unit": "vitest --project unit",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
+    "update": "node scripts/update.js",
     "postinstall": "simple-git-hooks"
   },
   "devDependencies": {
@@ -26,6 +27,7 @@
     "@types/node": "catalog:",
     "eslint": "catalog:",
     "eslint-plugin-format": "catalog:",
+    "gray-matter": "catalog:",
     "jsdom": "catalog:",
     "lint-staged": "catalog:",
     "picocolors": "catalog:",
@@ -35,6 +37,7 @@
     "rollup-plugin-esbuild": "catalog:",
     "rollup-plugin-pure": "catalog:",
     "simple-git-hooks": "catalog:",
+    "tinyglobby": "catalog:",
     "typescript": "catalog:",
     "unocss": "catalog:",
     "vite": "catalog:",
