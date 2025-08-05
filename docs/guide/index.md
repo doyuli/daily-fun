@@ -1,112 +1,42 @@
-# Get Started
+# 开始使用
 
-<CourseLink href="https://vueschool.io/courses/vueuse-for-everyone?friend=vueuse">Learn VueUse with video</CourseLink>
+DailyFun 是一个基于 [Composition API](https://vuejs.org/guide/extras/composition-api-faq.html) 的工具函数集合。在继续之前，我们假设您已经熟悉 [Composition API](https://vuejs.org/guide/extras/composition-api-faq.html) 的基本概念。
 
-VueUse is a collection of utility functions based on [Composition API](https://vuejs.org/guide/extras/composition-api-faq.html). We assume you are already familiar with the basic ideas of [Composition API](https://vuejs.org/guide/extras/composition-api-faq.html) before you continue.
-
-## Installation
-
-> From v12.0, VueUse no longer supports Vue 2. Please use v11.x for Vue 2 support.
+## 安装
 
 ```bash
-npm i @vueuse/core
+npm i @daily-fun/core
 ```
 
-[Add ons](/add-ons.html) | [Nuxt Module](/guide/index.html#nuxt)
-
-###### Demos
+###### 示例项目
 
 - [Vite + Vue 3](https://github.com/vueuse/vueuse-vite-starter)
 - [Nuxt 3 + Vue 3](https://github.com/antfu/vitesse-nuxt3)
 - [Webpack + Vue 3](https://github.com/vueuse/vueuse-vue3-example)
 
-### CDN
+## 使用示例
 
-```vue
-<script src="https://unpkg.com/@vueuse/shared"></script>
-
-<script src="https://unpkg.com/@vueuse/core"></script>
-```
-
-It will be exposed to global as `window.VueUse`
-
-### Nuxt
-
-From v7.2.0, we shipped a Nuxt module to enable auto importing for Nuxt 3 and Nuxt Bridge.
-
-Install the vueuse module into your application using [nuxi](https://nuxt.com/docs/api/commands/module):
-
-```bash
-npx nuxi@latest module add vueuse
-```
-
-Or use npm:
-
-```bash
-npm i -D @vueuse/nuxt @vueuse/core
-```
-
-Nuxt 3
-
-```ts
-// nuxt.config.ts
-export default defineNuxtConfig({
-  modules: [
-    '@vueuse/nuxt',
-  ],
-})
-```
-
-Nuxt 2
-
-```ts
-// nuxt.config.js
-export default {
-  buildModules: [
-    '@vueuse/nuxt',
-  ],
-}
-```
-
-And then use VueUse function anywhere in your Nuxt app. For example:
-
-```vue twoslash
-<script setup lang="ts">
-// ---cut-start---
-// Actually auto-imported, but here we need to tell TwoSlash about it
-import { useMouse } from '@vueuse/core'
-// ---cut-end---
-const { x, y } = useMouse()
-</script>
-
-<template>
-  <div>pos: {{ x }}, {{ y }}</div>
-</template>
-```
-
-## Usage Example
-
-Simply importing the functions you need from `@vueuse/core`
+只需从 `@daily-fun/core` 导入您需要的函数：
 
 ```vue twoslash
 <script setup>
-import { useLocalStorage, useMouse, usePreferredDark } from '@vueuse/core'
+import { useCancelableTask } from '@daily-fun/core'
 
-// tracks mouse position
-const { x, y } = useMouse()
+function asyncFunction() {
+  return new Promise<string>((resolve) => {
+    setTimeout(() => {
+      resolve('some...')
+    }, 1000)
+  })
+}
 
-// is user prefers dark theme
-const isDark = usePreferredDark()
+// 可取消的异步函数
+const { execute, cancel } = useCancelableTask(asyncFunction)
 
-// persist state in localStorage
-const store = useLocalStorage(
-  'my-storage',
-  {
-    name: 'Apple',
-    color: 'red',
-  },
-)
+// 执行
+execute()
+
+// 取消
+cancel()
 </script>
 ```
-
-Refer to [functions list](/functions) for more details.

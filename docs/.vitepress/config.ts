@@ -6,15 +6,17 @@ import metadata from '../public/meta.json'
 import vite from './vite.config'
 
 const Guide = [
-  { text: 'Get Started', link: '/guide/' },
-  { text: 'Best Practice', link: '/guide/best-practice' },
-  { text: 'Configurations', link: '/guide/config' },
-  { text: 'Components', link: '/guide/components' },
+  { text: '开始使用', link: '/guide/' },
+  { text: '最佳实践', link: '/guide/best-practice' },
+  { text: '组件', link: '/guide/components' },
 ]
 
-const DefaultSideBar = Guide
-
 const FunctionsSideBar = getFunctionsSideBar()
+
+const DefaultSideBar = [
+  { text: 'Guide', items: Guide },
+  ...FunctionsSideBar,
+]
 
 const sidebar = {
   '/guide/': DefaultSideBar,
@@ -24,13 +26,13 @@ const sidebar = {
 
 const nav = [
   {
-    text: 'Guide',
+    text: '指南',
     items: [
       { text: 'Guide', items: Guide },
     ],
   },
   {
-    text: 'Core',
+    text: '函数',
     items: FunctionsSideBar,
   },
 ]
@@ -45,7 +47,7 @@ export default defineConfig({
     nav,
     sidebar,
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' },
+      { icon: 'github', link: 'https://github.com/doyuli/daily-fun' },
     ],
     footer: {
       message: 'Released under the MIT License.',

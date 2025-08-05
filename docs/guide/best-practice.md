@@ -1,63 +1,67 @@
-# Best Practice
+# 最佳实践
 
-### Destructuring
+### 解构
 
-Most of the functions in VueUse return an **object of refs** that you can use [ES6's object destructure](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) syntax on to take what you need. For example:
+DailyFun 中的大多数函数返回一个**refs 对象**，你可以使用 [ES6 的对象解构语法](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment)来提取所需的内容。例如：
 
 ```ts twoslash
-import { useMouse } from '@vueuse/core'
+import { useResetableRef } from '@daily-fun/core'
 
-// "x" and "y" are refs
-const { x, y } = useMouse()
+const [state, reset] = useResetableRef({ x: 1, y: 2, })
 
-console.log(x.value)
+// state 是 ref
+console.log(state.value)
 
-const mouse = useMouse()
+state.value.x++
 
-console.log(mouse.x.value)
+reset()
+
+console.log(state.value)
 ```
 
-If you prefer to use them as object properties, you can unwrap the refs by using `reactive()`. For example:
+如果你更喜欢将它们用作对象属性，你可以使用 `reactive()` 来取消引用 ref。例如：
 
-```ts twoslash
-import { useMouse } from '@vueuse/core'
+```ts
+import { useResetableRef } from '@daily-fun/core'
 import { reactive } from 'vue'
 
-const mouse = reactive(useMouse())
+const [state, reset] = useResetableRef({ x: 1, y: 2, })
 
-// "x" and "y" will be auto unwrapped, no `.value` needed
-console.log(mouse.x)
+const reactiveState = reactive(state)
+
+// "x" 和 "y" 将自动取消引用，无需 `.value`
+console.log(reactiveState.x)
 ```
 
-### Side-effect Clean Up
+### 副作用清理
 
-Similar to Vue's `watch` and `computed` that will be disposed when the component is unmounted, VueUse's functions also clean up the side-effects automatically.
+类似于 Vue 的 `watch` 和 `computed` 在组件卸载时会被清理，daily-fun 的函数也会自动清理副作用。
 
-For example, `useEventListener` will call `removeEventListener` when the component is unmounted.
+例如，`useEventListener` 在组件卸载时会调用 `removeEventListener`。
 
-```ts twoslash
-import { useEventListener } from '@vueuse/core'
+```ts
+import { useEventListener } from '@daily-fun/core'
 // ---cut---
-// will cleanup automatically
+// 将自动清理
 useEventListener('mousemove', () => {})
 ```
 
-All VueUse functions follow this convention.
+所有 daily-fun 函数都遵循这一约定。
 
-To manually dispose the side-effects, some functions return a stop handler just like the `watch` function. For example:
+有些函数会返回一个类似于 `watch` 函数的停止处理器，用于手动清理副作用。例如：
 
-```ts twoslash
-import { useEventListener } from '@vueuse/core'
+```ts
+import { useEventListener } from '@daily-fun/core'
 // ---cut---
 const stop = useEventListener('mousemove', () => {})
 
 // ...
 
-// unregister the event listener manually
+// 手动注销事件监听器
 stop()
 ```
 
-Not all functions return a `stop` handler so a more general solution is to use the [`effectScope` API](https://vuejs.org/api/reactivity-advanced.html#effectscope) from Vue.
+并非所有函数都会返回一个 `stop` 处理器，因此更通用的解决方案是使用 Vue 的 [`effectScope` API](https://cn.vuejs.org/api/reactivity-advanced#effectscope)。
 
 ```ts
 import { effectScope } from 'vue'
@@ -72,25 +76,25 @@ scope.run(() => {
   watch(source, () => {})
 })
 
-// all composables called inside `scope.run` will be disposed
+// 所有在 `scope.run` 内调用的组合函数都将被清理
 scope.stop()
 ```
 
-You can learn more about `effectScope` in [this RFC](https://github.com/vuejs/rfcs/blob/master/active-rfcs/0041-reactivity-effect-scope.md).
+你可以在 [这个 RFC](https://github.com/vuejs/rfcs/blob/master/active-rfcs/0041-reactivity-effect-scope.md) 中了解更多关于 `effectScope` 的信息。
 
-### Reactive Arguments
+### 响应式参数
 
-In Vue, we use the `setup()` function to construct the "connections" between data and logic. To make it flexible, most of the VueUse functions also accept refs for the arguments because refs are reactive.
+在 Vue 中，我们使用 `setup()` 函数来构建数据和逻辑之间的“连接”。为了使其灵活，大多数 daily-fun 函数也接受 ref 作为参数，因为 ref 是响应式的。
 
-Take `useTitle` as an example:
+以 `useTitle` 为例：
 
-###### Non-reactive Argument
+###### 非响应式参数
 
-The `useTitle` composable helps you get and set the current page's `document.title` property.
+`useTitle` 组合函数帮助你获取并设置当前页面的 `document.title` 属性。
 
-```ts twoslash
+```ts
 // @lib: dom
-import { useDark, useTitle } from '@vueuse/core'
+import { useDark, useTitle } from '@daily-fun/core'
 import { watch } from 'vue'
 // ---cut---
 const isDark = useDark()
@@ -103,12 +107,12 @@ watch(isDark, () => {
 })
 ```
 
-###### Ref Argument
+###### Ref 参数
 
-You can pass a ref into `useTitle` instead of using the returned ref.
+你可以将一个 ref 传递给 `useTitle`，而不是使用返回的 ref。
 
-```ts twoslash
-import { useDark, useTitle } from '@vueuse/core'
+```ts
+import { useDark, useTitle } from '@daily-fun/core'
 import { computed } from 'vue'
 // ---cut---
 const isDark = useDark()
@@ -117,12 +121,12 @@ const title = computed(() => isDark.value ? '🌙 Good evening!' : '☀️ Good 
 useTitle(title)
 ```
 
-###### Reactive Getter Argument
+###### 响应式 Getter 参数
 
-Since VueUse 9.0, we introduced a new convention for passing a "Reactive Getter" as the argument, which works great with reactive objects and [Reactivity Transform](https://vuejs.org/guide/extras/reactivity-transform.html#reactivity-transform).
+自 daily-fun 9.0 起，我们引入了一种新的传递“响应式 Getter”作为参数的约定，它与响应式对象和[响应式转换](https://cn.vuejs.org/guide/extras/reactivity-transform)非常配合。
 
-```ts twoslash
-import { useDark, useTitle } from '@vueuse/core'
+```ts
+import { useDark, useTitle } from '@daily-fun/core'
 // ---cut---
 const isDark = useDark()
 

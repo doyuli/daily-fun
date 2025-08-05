@@ -1,43 +1,50 @@
-# Components
+# 组件
 
-In v5.0, we introduced a new package, `@vueuse/components` providing renderless component versions of composable functions.
+我们引入了一个新的包，`@daily-fun/components`，提供了无渲染组件版本的可组合函数。
 
-## Install
+## 安装
 
 ```bash
-npm i @vueuse/core @vueuse/components
+npm i @daily-fun/core @daily-fun/components
 ```
 
-## Usage
+## 使用
 
-For example of `onClickOutside`, instead of binding the component ref for functions to consume:
+例如，对于 `defineAsyncComponent`，不再需要为函数绑定组件引用：
 
-```vue
+```vue twoslash
 <script setup>
-import { onClickOutside } from '@vueuse/core'
-import { useTemplateRef } from 'vue'
+import type { Component } from 'vue'
+import { defineAsyncComponent } from '@daily-fun/components'
+import { h } from 'vue'
 
-const el = useTemplateRef('el')
-
-function close() {
-  /* ... */
+function loadComponent() {
+  return new Promise<Component>((resolve) => {
+    setTimeout(() => {
+      resolve(h('input', { type: 'text' }))
+    }, 1000)
+  })
 }
 
-onClickOutside(el, close)
+const AsyncComponent = defineAsyncComponent({
+  loadingComponent: () => h('span', 'loading'),
+  errorComponent: () => h('span', 'error'),
+  loader: loadComponent,
+})
 </script>
 
 <template>
-  <div ref="el">
-    Click Outside of Me
+  <div>
+    <AsyncComponent />
   </div>
 </template>
 ```
 
-We can now use the renderless component which the binding is done automatically:
+我们现在可以使用自动绑定的无渲染组件：
 
 ```vue
 <script setup>
-import { OnClickOutside } from '@vueuse/components'
+import { OnClickOutside } from '@daily-fun/components'
 
 function close() {
   /* ... */
@@ -53,9 +60,9 @@ function close() {
 </template>
 ```
 
-## Return Value
+## 返回值
 
-You can access return values with `v-slot`:
+您可以使用 `v-slot` 访问返回值。
 
 ```vue
 <template>
@@ -76,4 +83,4 @@ You can access return values with `v-slot`:
 </template>
 ```
 
-Refer to each function's documentation for the detailed usage of component style.
+请参考每个函数的文档以了解组件样式的详细用法。

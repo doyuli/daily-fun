@@ -4,7 +4,7 @@ import { shallowRef } from 'vue'
 
 const state = shallowRef('loading')
 
-function getData() {
+function asyncFunction() {
   return new Promise<string>((resolve) => {
     setTimeout(() => {
       resolve('success')
@@ -12,7 +12,7 @@ function getData() {
   })
 }
 
-const { execute: _execute, cancel } = useCancelableTask(getData)
+const { execute: _execute, cancel } = useCancelableTask(asyncFunction)
 
 async function execute() {
   state.value = 'loading'
