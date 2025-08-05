@@ -9,6 +9,7 @@
   "keywords": [],
   "main": "index.js",
   "scripts": {
+    "dev": "node scripts/dev.js",
     "docs": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
@@ -24,6 +25,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:",
+    "@clack/prompts": "catalog:",
     "@iconify/json": "catalog:",
     "@rollup/plugin-json": "catalog:",
     "@shikijs/vitepress-twoslash": "catalog:",
