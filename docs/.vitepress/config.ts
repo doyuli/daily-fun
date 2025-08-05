@@ -31,14 +31,7 @@ const nav = [
   },
   {
     text: 'Core',
-    items: [
-      {
-        text: '',
-        items: [
-          { text: 'Core', link: '/core/useResetableRef' },
-        ],
-      },
-    ],
+    items: FunctionsSideBar,
   },
 ]
 
