@@ -9,8 +9,21 @@ useCancelableTask desc
 
 ## Usage
 
-```ts {3}
+```ts {11} twoslash colorize-brackets
 import { useCancelableTask } from '@daily-fun/core'
+import {
+  transformerTwoslash,
+} from '@shikijs/twoslash'
+import { shallowRef } from 'vue'
 
-const { execute, cancel } = useCancelableTask(asyncFn)
+function getData() {
+  return new Promise<string>((resolve) => {
+    setTimeout(() => {
+      resolve('success')
+    }, 1000)
+  })
+}
+
+const { execute, cancel } = useCancelableTask(getData)
+console.log('hello')
 ```

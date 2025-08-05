@@ -1,6 +1,9 @@
+import { transformerTwoslash } from '@shikijs/vitepress-twoslash'
+import { createFileSystemTypesCache } from '@shikijs/vitepress-twoslash/cache-fs'
 import { defineConfig } from 'vitepress'
+
 import metadata from '../public/meta.json'
-import viteConfig from './vite.config'
+import vite from './vite.config'
 
 const Guide = [
   { text: 'Get Started', link: '/guide/' },
@@ -56,7 +59,19 @@ export default defineConfig({
       copyright: 'Copyright © 2025-PRESENT Yulia Dong',
     },
   },
-  vite: viteConfig as any,
+  markdown: {
+    theme: {
+      light: 'vitesse-light',
+      dark: 'vitesse-dark',
+    },
+    codeTransformers: [
+      transformerTwoslash({
+        typesCache: createFileSystemTypesCache(),
+      }),
+    ],
+    languages: ['js', 'ts'],
+  },
+  vite,
 })
 
 function getFunctionsSideBar() {

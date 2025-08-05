@@ -10,6 +10,8 @@
   "main": "index.js",
   "scripts": {
     "docs": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs",
     "play": "cd playground && pnpm dev",
     "build": "pnpm -r run build",
     "build:watch": "pnpm -r --parallel run build --watch",
@@ -24,6 +26,7 @@
     "@antfu/eslint-config": "catalog:",
     "@iconify/json": "catalog:",
     "@rollup/plugin-json": "catalog:",
+    "@shikijs/vitepress-twoslash": "catalog:",
     "@types/node": "catalog:",
     "eslint": "catalog:",
     "eslint-plugin-format": "catalog:",
