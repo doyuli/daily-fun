@@ -1,4 +1,5 @@
 export * from './createCacheRequest'
+export * from './createFetch'
 export * from './useAsyncOnce'
 export * from './useCancelableTask'
 export * from './useResetableRef'
