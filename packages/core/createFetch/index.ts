@@ -101,7 +101,7 @@ export class UFetch {
       const chain: any[] = [
         {
           fulfilled: this.dispatchRequest,
-          rejected: (error: any) => error,
+          rejected: undefined,
         },
       ]
       chain.unshift(...requestInterceptorChain)
