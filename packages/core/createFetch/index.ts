@@ -96,6 +96,7 @@ export class UFetch {
     let len = 0
     let promise
 
+    // asyncInterceptor
     if (!synchronousRequestInterceptors) {
       const chain: any[] = [
         {
@@ -117,6 +118,7 @@ export class UFetch {
       return promise
     }
 
+    // requestInterceptorChain
     len = requestInterceptorChain.length
     let finalOptions = _options
 
@@ -139,19 +141,13 @@ export class UFetch {
       return Promise.reject(error)
     }
 
+    // responseInterceptorChain
     len = responseInterceptorChain.length
     i = 0
 
     while (len > i) {
       const { fulfilled, rejected } = responseInterceptorChain[i++]
-
-      try {
-        promise = promise.then(fulfilled, rejected)
-      }
-      catch (error) {
-        rejected.call(this, error)
-        break
-      }
+      promise = promise.then(fulfilled, rejected)
     }
 
     return promise
