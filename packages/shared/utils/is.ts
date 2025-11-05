@@ -4,3 +4,4 @@ export const isArray = (val: any) => Array.isArray(val)
 export const isFunction = (val: any) => typeof val === 'function'
 export const isString = (val: any) => typeof val === 'string'
 export const isNumber = (val: any) => typeof val === 'number'
+export const isDomElement = (val: any) => val instanceof Element || val instanceof HTMLCollection
