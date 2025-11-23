@@ -5,17 +5,15 @@
   "description": "@daily-fun/components",
   "sideEffects": false,
   "exports": {
-    ".": "./dist/index.mjs",
+    ".": "./dist/index.js",
     "./*": "./dist/*"
   },
-  "main": "./dist/index.mjs",
-  "module": "./dist/index.mjs",
-  "unpkg": "./dist/index.iife.min.js",
-  "jsdelivr": "./dist/index.iife.min.js",
-  "types": "./dist/index.d.mts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": ["dist"],
   "scripts": {
-    "build": "rollup --config=rollup.config.ts --configPlugin=rollup-plugin-esbuild",
+    "build": "tsdown",
     "prepack": "pnpm run build"
   },
   "peerDependencies": {

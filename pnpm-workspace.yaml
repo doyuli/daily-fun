@@ -24,12 +24,9 @@ catalog:
   picocolors: ^1.1.1
   pinia: ^3.0.3
   prettier: ^3.5.3
-  rollup: ^4.46.2
-  rollup-plugin-dts: ^6.2.1
-  rollup-plugin-esbuild: ^6.2.1
-  rollup-plugin-pure: ^0.4.0
   simple-git-hooks: ^2.13.0
   tinyglobby: ^0.2.14
+  tsdown: ^0.16.6
   typescript: ^5.8.3
   unocss: ^66.4.0
   unplugin-vue-router: ^0.14.0
@@ -40,3 +37,8 @@ catalog:
   vue: ^3.5.13
   vue-router: ^4.5.1
   vue-tsc: ^3.0.4
+
+shamefullyHoist: true
+shellEmulator: true
+sideEffectsCache: false
+strictPeerDependencies: false
