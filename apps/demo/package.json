@@ -1,5 +1,5 @@
 {
-  "name": "playground",
+  "name": "@daily-fun/demo",
   "type": "module",
   "version": "0.0.0",
   "private": true,
@@ -8,9 +8,8 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "echo \"[skip] playground build is disabled\" && exit 0",
+    "build": "vite build",
     "preview": "vite preview",
-    "build-only": "vite build",
     "type-check": "vue-tsc --build"
   },
   "dependencies": {
