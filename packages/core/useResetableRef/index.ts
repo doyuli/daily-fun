@@ -1,22 +1,22 @@
+import type { Ref } from 'vue'
 import { cloneDeep } from '@daily-fun/shared'
 import { reactive, ref } from 'vue'
 
-export function useResetableRef<T>(value: T, clone = cloneDeep) {
-  const rawValue = clone(value)
-  const state = ref(value)
+type ResetRefReturn<T> = readonly [Ref<T>, () => void]
 
-  const reset = () => {
-    state.value = clone(rawValue)
+export function useResetableRef<T>(getter: () => T): ResetRefReturn<T>
+export function useResetableRef<T>(value: T, clone?: (val: T) => T): ResetRefReturn<T>
+export function useResetableRef<T>(
+  valueOrGetter: T | (() => T),
+  clone = cloneDeep,
+) {
+  const getRaw = () => {
+    return typeof valueOrGetter === 'function' ? (valueOrGetter as () => T)() : clone(valueOrGetter)
   }
-
-  return [state, reset] as const
-}
-
-export function useResetableRefFn<T>(getter: () => T) {
-  const state = ref(getter())
+  const state = ref(getRaw())
 
   const reset = () => {
-    state.value = getter()
+    state.value = getRaw()
   }
 
   return [state, reset] as const

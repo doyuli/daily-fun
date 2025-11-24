@@ -1,4 +1,4 @@
-import { useResetableReactive, useResetableRef, useResetableRefFn } from '@daily-fun/core'
+import { useResetableReactive, useResetableRef } from '@daily-fun/core'
 import { describe, expect, it } from 'vitest'
 import { nextTick } from 'vue'
 
@@ -21,8 +21,8 @@ describe('useResetableRef', () => {
     expect(state.value).toEqual({ a: '', b: 'I am B' })
   })
 
-  it('should be reset by useResetableRefFn', async () => {
-    const [state, reset] = useResetableRefFn<Record<string, any>>(() => ({ a: '', b: 'I am B' }))
+  it('should be reset by useResetableRef with getter', async () => {
+    const [state, reset] = useResetableRef<Record<string, any>>(() => ({ a: '', b: 'I am B' }))
 
     state.value.a = 'I am A'
 
