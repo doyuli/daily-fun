@@ -25,7 +25,7 @@ const iifeGlobals = {
 
 export function createTsdownConfig(options?: Buildoptions): UserConfig | undefined {
   const {
-    entry = 'index.ts',
+    entry = 'src/index.ts',
     iife,
     mjs,
     dts,
