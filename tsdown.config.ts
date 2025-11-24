@@ -2,14 +2,14 @@ import type { Format, UserConfig } from 'tsdown'
 import { defineConfig } from 'tsdown'
 
 export interface Buildoptions {
-  input?: string
-  file?: string
+  entry?: string | string[] | Record<string, string>
   iife?: boolean
   mjs?: boolean
   dts?: boolean
   build?: boolean
   target?: string
   external?: string[]
+  globals?: Record<string, string>
 }
 
 const externals = [
@@ -23,21 +23,20 @@ const iifeGlobals = {
   '@daily-fun/core': 'DailyFun',
 }
 
-export function createTsdownConfig(options?: Buildoptions): UserConfig[] {
+export function createTsdownConfig(options?: Buildoptions): UserConfig | undefined {
   const {
-    input = 'index.ts',
+    entry = 'index.ts',
     iife,
     mjs,
     dts,
     build,
     target = 'es2018',
     external = [],
+    globals = {},
   } = options || {}
 
   if (build === false)
-    return []
-
-  const configs: UserConfig[] = []
+    return
 
   const formats: Format[] = []
 
@@ -49,18 +48,21 @@ export function createTsdownConfig(options?: Buildoptions): UserConfig[] {
     formats.push('iife')
   }
 
-  configs.push(defineConfig({
-    target,
+  return defineConfig({
+    entry,
     dts,
+    target,
     platform: 'browser',
-    entry: input,
     format: formats,
     external: [...externals, ...external],
     globalName: 'DailyFun',
-    outputOptions: {
-      globals: iifeGlobals,
-    },
-  }))
-
-  return configs
+    outputOptions: iife
+      ? {
+          globals: {
+            ...iifeGlobals,
+            ...globals,
+          },
+        }
+      : undefined,
+  })
 }
