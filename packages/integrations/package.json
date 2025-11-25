@@ -1,0 +1,37 @@
+{
+  "name": "@daily-fun/integrations",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "@daily-fun/integrations",
+  "sideEffects": false,
+  "exports": {
+    ".": "./dist/index.js",
+    "./*": "./dist/*",
+    "./asyncCatch": "./dist/asyncCatch.js"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "prepack": "pnpm run build"
+  },
+  "peerDependencies": {
+    "vue": "^3.5.0"
+  },
+  "dependencies": {
+    "@babel/generator": "catalog:",
+    "@babel/parser": "catalog:",
+    "@babel/traverse": "catalog:",
+    "@babel/types": "catalog:",
+    "@daily-fun/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/babel__generator": "catalog:",
+    "@types/babel__traverse": "catalog:",
+    "vite": "catalog:"
+  }
+}
