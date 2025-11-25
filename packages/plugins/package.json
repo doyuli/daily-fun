@@ -1,0 +1,28 @@
+{
+  "name": "@daily-fun/plugins",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "@daily-fun/plugins",
+  "sideEffects": false,
+  "exports": {
+    ".": "./dist/index.js",
+    "./*": "./dist/*"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "prepack": "pnpm run build"
+  },
+  "peerDependencies": {
+    "vue": "^3.5.0"
+  },
+  "dependencies": {
+    "@daily-fun/integrations": "workspace:*",
+    "@daily-fun/shared": "workspace:*"
+  }
+}

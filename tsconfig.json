@@ -9,9 +9,18 @@
       "@daily-fun/core": ["packages/core/index.ts"],
       "@daily-fun/core/*": ["packages/core/*"],
       "@daily-fun/shared": ["packages/shared/index.ts"],
-      "@daily-fun/shared/*": ["packages/shared/*"]
+      "@daily-fun/shared/*": ["packages/shared/*"],
+      "@daily-fun/integrations": ["packages/integrations/index.ts"],
+      "@daily-fun/integrations/*": ["packages/integrations/*"],
+      "@daily-fun/components": ["packages/components/index.ts"],
+      "@daily-fun/components/*": ["packages/components/*"],
+      "@daily-fun/plugins": ["packages/plugins/index.ts"],
+      "@daily-fun/plugins/*": ["packages/plugins/*"]
     },
     "resolveJsonModule": true,
-    "strict": true
+    "allowImportingTsExtensions": true,
+    "strict": true,
+    "declaration": true,
+    "emitDeclarationOnly": true
   }
 }
