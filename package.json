@@ -3,10 +3,13 @@
   "type": "module",
   "version": "1.0.0",
   "packageManager": "pnpm@10.6.5",
-  "description": "",
-  "author": "",
+  "description": "Interesting toolset",
+  "author": "doyuli",
   "license": "ISC",
-  "keywords": [],
+  "keywords": [
+    "vue",
+    "toolset"
+  ],
   "scripts": {
     "dev": "node scripts/dev.js",
     "docs": "vitepress dev docs",
@@ -26,7 +29,6 @@
     "@antfu/eslint-config": "catalog:",
     "@clack/prompts": "catalog:",
     "@iconify/json": "catalog:",
-    "@rollup/plugin-json": "catalog:",
     "@shikijs/vitepress-twoslash": "catalog:",
     "@types/node": "catalog:",
     "eslint": "catalog:",

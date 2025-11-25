@@ -27,9 +27,6 @@ catalogs:
     '@iconify/json':
       specifier: ^2.2.365
       version: 2.2.365
-    '@rollup/plugin-json':
-      specifier: ^6.1.0
-      version: 6.1.0
     '@shikijs/vitepress-twoslash':
       specifier: ^3.9.2
       version: 3.9.2
@@ -137,9 +134,6 @@ importers:
       '@iconify/json':
         specifier: 'catalog:'
         version: 2.2.365
-      '@rollup/plugin-json':
-        specifier: 'catalog:'
-        version: 6.1.0(rollup@4.46.2)
       '@shikijs/vitepress-twoslash':
         specifier: 'catalog:'
         version: 3.9.2(typescript@5.9.2)
@@ -292,6 +286,18 @@ importers:
       vite:
         specifier: 'catalog:'
         version: 7.0.6(@types/node@22.17.0)(jiti@2.5.1)(yaml@2.8.0)
+
+  packages/plugins:
+    dependencies:
+      '@daily-fun/integrations':
+        specifier: workspace:*
+        version: link:../integrations
+      '@daily-fun/shared':
+        specifier: workspace:*
+        version: link:../shared
+      vue:
+        specifier: ^3.5.0
+        version: 3.5.18(typescript@5.9.2)
 
   packages/shared:
     dependencies:
@@ -1002,24 +1008,6 @@ packages:
 
   '@rolldown/pluginutils@1.0.0-beta.51':
     resolution: {integrity: sha512-51/8cNXMrqWqX3o8DZidhwz1uYq0BhHDDSfVygAND1Skx5s1TDw3APSSxCMcFFedwgqGcx34gRouwY+m404BBQ==}
-
-  '@rollup/plugin-json@6.1.0':
-    resolution: {integrity: sha512-EGI2te5ENk1coGeADSIwZ7G2Q8CJS2sF120T7jLw4xFw9n7wIOXHo+kIYRAoVpJAN+kmqZSoO3Fp4JtoNF4ReA==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
-    peerDependenciesMeta:
-      rollup:
-        optional: true
-
-  '@rollup/pluginutils@5.2.0':
-    resolution: {integrity: sha512-qWJ2ZTbmumwiLFomfzTyt5Kng4hwPi9rwCYN4SHb6eaRU1KNO4ccxINHr/VhH4GgPlt1XfSTLX2LBTme8ne4Zw==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
-    peerDependenciesMeta:
-      rollup:
-        optional: true
 
   '@rollup/rollup-android-arm-eabi@4.46.2':
     resolution: {integrity: sha512-Zj3Hl6sN34xJtMv7Anwb5Gu01yujyE/cLBDB2gnHTAHaWS1Z38L7kuSG+oAh0giZMqG060f/YBStXtMH6FvPMA==}
@@ -4426,20 +4414,6 @@ snapshots:
   '@rolldown/pluginutils@1.0.0-beta.29': {}
 
   '@rolldown/pluginutils@1.0.0-beta.51': {}
-
-  '@rollup/plugin-json@6.1.0(rollup@4.46.2)':
-    dependencies:
-      '@rollup/pluginutils': 5.2.0(rollup@4.46.2)
-    optionalDependencies:
-      rollup: 4.46.2
-
-  '@rollup/pluginutils@5.2.0(rollup@4.46.2)':
-    dependencies:
-      '@types/estree': 1.0.8
-      estree-walker: 2.0.2
-      picomatch: 4.0.3
-    optionalDependencies:
-      rollup: 4.46.2
 
   '@rollup/rollup-android-arm-eabi@4.46.2':
     optional: true
