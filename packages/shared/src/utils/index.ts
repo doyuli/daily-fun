@@ -1,3 +1,3 @@
-export * from './constants'
+export * from './array'
 export * from './is'
 export * from './util'

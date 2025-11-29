@@ -1,3 +1,4 @@
+/* eslint-disable antfu/top-level-function */
 export function cloneDeep<T>(val: T): T {
   if (val === null || typeof val !== 'object')
     return val
@@ -5,3 +6,5 @@ export function cloneDeep<T>(val: T): T {
 }
 export const jsonStringify = (val: unknown): string => JSON.stringify(val)
 export const promiseResolve = <T>(value: T, ms: number = 30) => new Promise<T>(resolve => setTimeout(() => resolve(value), ms))
+export const noop = () => {}
+export const resolvedPromise = Promise.resolve()
