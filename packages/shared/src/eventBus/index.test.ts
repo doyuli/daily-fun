@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import { EventBus } from '.'
 
-describe('taskScheduler', () => {
+describe('eventBus', () => {
   it('should be in singleton mode', () => {
     const bus1 = EventBus.getInstance()
     const bus2 = EventBus.getInstance()
@@ -53,18 +53,18 @@ describe('taskScheduler', () => {
     expect(handler).toHaveBeenCalledTimes(1)
     expect(handler).toHaveBeenCalledWith(payload)
   })
-})
 
-it('should clear all handlers after clear() is called', () => {
-  const bus = EventBus.getInstance()
-  const handler = vi.fn()
-  const payload = [1, 2, 3]
+  it('should clear all handlers after clear() is called', () => {
+    const bus = EventBus.getInstance()
+    const handler = vi.fn()
+    const payload = [1, 2, 3]
 
-  bus.on('test', handler)
+    bus.on('test', handler)
 
-  bus.clear('test')
+    bus.clear('test')
 
-  bus.emit('test', payload)
+    bus.emit('test', payload)
 
-  expect(handler).not.toHaveBeenCalled()
+    expect(handler).not.toHaveBeenCalled()
+  })
 })
