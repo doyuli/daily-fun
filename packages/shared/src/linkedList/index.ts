@@ -1,4 +1,4 @@
-class LinkedNode<T = any> {
+export class LinkedNode<T = any> {
   _value
   next?: LinkedNode<T>
   constructor(value: T) {

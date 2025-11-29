@@ -1,4 +1,4 @@
-import type { IsAny } from '@daily-fun/shared'
+import type { IsAny } from '../utils'
 
 type Callback<T> = IsAny<T> extends true ? (...args: any) => void
   : [T] extends [void] ? () => void

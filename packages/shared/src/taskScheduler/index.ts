@@ -1,5 +1,5 @@
-import type { AnyFn } from '@daily-fun/shared'
-import { resolvedPromise } from '@daily-fun/shared'
+import type { AnyFn } from '../utils'
+import { resolvedPromise } from '../utils'
 
 export class TaskScheduler {
   private queue: (AnyFn)[]

@@ -1,4 +1,4 @@
-import type { AnyFn } from '@daily-fun/shared'
+import type { AnyFn } from '../utils'
 
 export class EventBus {
   private events: Map<string, Set<AnyFn>> = new Map()

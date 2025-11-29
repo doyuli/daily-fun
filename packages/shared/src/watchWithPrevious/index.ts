@@ -1,6 +1,6 @@
 import type { WatchCallback, WatchOptions, WatchSource } from 'vue'
-import { cloneDeep, isObject } from '@daily-fun/shared'
 import { toValue, watch } from 'vue'
+import { cloneDeep, isObject } from '../utils'
 
 export function watchWithPrevious<T>(
   source: WatchSource<T>,

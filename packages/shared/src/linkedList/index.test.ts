@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { LinkedList } from '.' // 假设你的文件名是 linkedList.ts
+import { LinkedList } from '.'
 
 describe('linkedList', () => {
   it('should initialize as empty', () => {
