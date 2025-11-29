@@ -56,7 +56,7 @@ export function createTsdownConfig(options?: Buildoptions): UserConfig | undefin
     format: formats,
     external: [...externals, ...external],
     globalName: 'DailyFun',
-    outputOptions: iife
+    outputOptions: iife !== false
       ? {
           globals: {
             ...iifeGlobals,
