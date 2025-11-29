@@ -1,3 +1,5 @@
 export * from './eventBus'
+export * from './linkedList'
+export * from './taskScheduler'
 export * from './utils'
 export * from './watchWithPrevious'
