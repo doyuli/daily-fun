@@ -21,5 +21,6 @@ declare module 'vue-router/auto-routes' {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
     '/async-component/': RouteRecordInfo<'/async-component/', '/async-component', Record<never, never>, Record<never, never>>,
     '/fetch/': RouteRecordInfo<'/fetch/', '/fetch', Record<never, never>, Record<never, never>>,
+    '/watermark/': RouteRecordInfo<'/watermark/', '/watermark', Record<never, never>, Record<never, never>>,
   }
 }
