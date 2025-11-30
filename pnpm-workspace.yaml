@@ -20,6 +20,7 @@ catalog:
   '@vitejs/plugin-vue-jsx': ^5.0.1
   '@vue/tsconfig': ^0.7.0
   ant-design-vue: ^4.2.6
+  element-plus: ^2.11.9
   eslint: ^9.32.0
   eslint-plugin-format: ^1.0.1
   gray-matter: ^4.0.3

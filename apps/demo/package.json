@@ -16,6 +16,7 @@
     "@daily-fun/components": "workspace:^",
     "@daily-fun/core": "workspace:^",
     "ant-design-vue": "catalog:",
+    "element-plus": "catalog:",
     "pinia": "catalog:",
     "vue": "catalog:",
     "vue-router": "catalog:"

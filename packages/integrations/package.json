@@ -7,7 +7,8 @@
   "exports": {
     ".": "./dist/index.js",
     "./*": "./dist/*",
-    "./asyncCatch": "./dist/asyncCatch.js"
+    "./asyncCatch": "./dist/asyncCatch.js",
+    "./elementPlus": "./dist/elementPlus.js"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -27,7 +28,8 @@
     "@babel/parser": "catalog:",
     "@babel/traverse": "catalog:",
     "@babel/types": "catalog:",
-    "@daily-fun/shared": "workspace:*"
+    "@daily-fun/shared": "workspace:*",
+    "element-plus": "catalog:"
   },
   "devDependencies": {
     "@types/babel__generator": "catalog:",
