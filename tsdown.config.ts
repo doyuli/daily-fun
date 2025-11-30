@@ -1,4 +1,5 @@
 import type { Format, UserConfig } from 'tsdown'
+import process from 'node:process'
 import { defineConfig } from 'tsdown'
 
 export interface Buildoptions {
@@ -52,6 +53,7 @@ export function createTsdownConfig(options?: Buildoptions): UserConfig | undefin
     entry,
     dts,
     target,
+    clean: !process.argv.includes('--watch'),
     platform: 'browser',
     format: formats,
     external: [...externals, ...external],
