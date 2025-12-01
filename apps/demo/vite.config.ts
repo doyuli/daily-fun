@@ -22,12 +22,4 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
-  server: {
-    fs: {
-      allow: [
-        // 允许为项目根目录的上一级提供服务
-        '..',
-      ],
-    },
-  },
 })
