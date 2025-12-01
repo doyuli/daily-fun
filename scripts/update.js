@@ -5,13 +5,13 @@ import { fileURLToPath } from 'node:url'
 import matter from 'gray-matter'
 import { glob } from 'tinyglobby'
 
-const packages = ['components', 'core', 'shared']
+const packages = ['components', 'core', 'shared', 'integrations', 'plugins']
 
 const __dirname = fileURLToPath(new URL(import.meta.url))
 export const DOCS_URL = 'https://vueuse.org'
 export const DIR_ROOT = resolve(__dirname, '../..')
 export const DIR_SRC = resolve(DIR_ROOT, 'packages')
-export const DOSC_SRC = resolve(DIR_ROOT, 'docs')
+export const DOCS_SRC = resolve(DIR_ROOT, 'docs')
 
 async function update() {
   const metadata = {
@@ -80,7 +80,7 @@ async function update() {
 async function listFunctions(dir, ignore = []) {
   const files = await glob('*', {
     onlyDirectories: true,
-    cwd: dir,
+    cwd: resolve(dir, 'src'),
     ignore: [
       '_*',
       'dist',
@@ -94,7 +94,7 @@ async function listFunctions(dir, ignore = []) {
 
 async function run() {
   const metadata = await update()
-  await fs.writeFile(join(DOSC_SRC, 'public', 'meta.json'), `${JSON.stringify(metadata, null, 2)}\n`)
+  await fs.writeFile(join(DOCS_SRC, 'public', 'meta.json'), `${JSON.stringify(metadata, null, 2)}\n`)
 }
 
 run()
