@@ -12,9 +12,9 @@
   ],
   "scripts": {
     "dev": "node scripts/dev.js",
-    "docs": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs",
+    "docs": "vitepress dev packages",
+    "docs:build": "vitepress build packages",
+    "docs:preview": "vitepress preview packages",
     "demo": "pnpm --filter @daily-fun/demo dev",
     "build": "pnpm --filter './packages/**' run build",
     "build:watch": "pnpm --filter './packages/**' --parallel run build --watch",

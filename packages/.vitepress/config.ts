@@ -55,6 +55,9 @@ export default defineConfig({
       copyright: 'Copyright © 2025-PRESENT Yulia Dong',
     },
   },
+  rewrites: {
+    ':pkg/src/:func/(.*)': ':pkg/:func/index.md',
+  },
   markdown: {
     theme: {
       light: 'vitesse-light',

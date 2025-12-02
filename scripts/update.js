@@ -5,50 +5,50 @@ import { fileURLToPath } from 'node:url'
 import matter from 'gray-matter'
 import { glob } from 'tinyglobby'
 
-const packages = ['components', 'core', 'shared', 'integrations', 'plugins']
+const PACKAGES = ['components', 'core', 'shared', 'integrations', 'plugins']
+const IGNORE_DIRS = ['utils']
+const DOCS_BASE_URL = 'https://daily-fun.org'
 
 const __dirname = fileURLToPath(new URL(import.meta.url))
-export const DOCS_URL = 'https://vueuse.org'
-export const DIR_ROOT = resolve(__dirname, '../..')
-export const DIR_SRC = resolve(DIR_ROOT, 'packages')
-export const DOCS_SRC = resolve(DIR_ROOT, 'docs')
+const ROOT_PATH = resolve(__dirname, '../..', 'packages')
+const OUTPUT_PATH = join(ROOT_PATH, 'public', 'meta.json')
 
-async function update() {
+async function buildProjectMetadata() {
   const metadata = {
     packages: {},
     functions: [],
   }
 
-  for (const pkgName of packages) {
-    const dir = join(DIR_SRC, pkgName)
-    const functions = await listFunctions(dir, ['utils'])
+  for (const pkgName of PACKAGES) {
+    const pkgRoot = join(ROOT_PATH, pkgName)
+    const pkgCwd = join(pkgRoot, 'src')
+    const functions = await getFunctionNamesInPackage(pkgCwd, IGNORE_DIRS)
 
     const pkg = {
       name: pkgName,
-      dir: relative(DIR_ROOT, dir).replace(/\\/g, '/'),
+      dir: relative(ROOT_PATH, pkgRoot).replace(/\\/g, '/'),
     }
 
     metadata.packages[pkgName] = pkg
 
     await Promise.all(functions.map(async (name) => {
-      const mdPath = join(dir, name, 'index.md').replace('packages', 'docs')
-      // const tsPath = join(dir, name, 'index.ts')
+      const mdPath = join(pkgCwd, name, 'index.md')
 
       const fn = {
         name,
         package: pkg.name,
       }
 
-      if (existsSync(join(dir, name, 'component.ts')))
+      if (existsSync(join(pkgCwd, name, 'component.ts')))
         fn.component = true
-      if (existsSync(join(dir, name, 'directive.ts')))
+      if (existsSync(join(pkgCwd, name, 'directive.ts')))
         fn.directive = true
       if (!existsSync(mdPath)) {
         metadata.functions.push(fn)
         return
       }
 
-      fn.docs = `${DOCS_URL}/${pkg.name}/${name}/`
+      fn.docs = `${DOCS_BASE_URL}/${pkg.name}/${name}/`
       fn.md = true
 
       const mdRaw = await fs.readFile(mdPath, 'utf-8')
@@ -77,10 +77,10 @@ async function update() {
   return metadata
 }
 
-async function listFunctions(dir, ignore = []) {
+async function getFunctionNamesInPackage(cwd, ignore = []) {
   const files = await glob('*', {
+    cwd,
     onlyDirectories: true,
-    cwd: resolve(dir, 'src'),
     ignore: [
       '_*',
       'dist',
@@ -92,9 +92,9 @@ async function listFunctions(dir, ignore = []) {
   return files.map(path => path.endsWith('/') ? path.slice(0, -1) : path)
 }
 
-async function run() {
-  const metadata = await update()
-  await fs.writeFile(join(DOCS_SRC, 'public', 'meta.json'), `${JSON.stringify(metadata, null, 2)}\n`)
+async function writeMetadataToFile() {
+  const metadata = await buildProjectMetadata()
+  await fs.writeFile(OUTPUT_PATH, `${JSON.stringify(metadata, null, 2)}\n`)
 }
 
-run()
+writeMetadataToFile()
