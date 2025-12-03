@@ -1,6 +1,7 @@
 import { existsSync } from 'node:fs'
 import * as fs from 'node:fs/promises'
 import { join, relative, resolve } from 'node:path'
+import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 import matter from 'gray-matter'
 import { glob } from 'tinyglobby'
@@ -10,8 +11,19 @@ const IGNORE_DIRS = ['utils']
 const DOCS_BASE_URL = 'https://daily-fun.org'
 
 const __dirname = fileURLToPath(new URL(import.meta.url))
-const ROOT_PATH = resolve(__dirname, '../..', 'packages')
-const OUTPUT_PATH = join(ROOT_PATH, 'public', 'meta.json')
+const ROOT = resolve(__dirname, '../..')
+const PACKAGES_ROOT = join(ROOT, 'packages')
+const OUTPUT_PATH = join(PACKAGES_ROOT, 'public', 'meta.json')
+
+async function main() {
+  const metadata = await buildProjectMetadata()
+  await fs.writeFile(OUTPUT_PATH, `${JSON.stringify(metadata, null, 2)}\n`)
+}
+
+main().catch((err) => {
+  console.error('[meta] failed:', err)
+  process.exit(1)
+})
 
 async function buildProjectMetadata() {
   const metadata = {
@@ -20,56 +32,22 @@ async function buildProjectMetadata() {
   }
 
   for (const pkgName of PACKAGES) {
-    const pkgRoot = join(ROOT_PATH, pkgName)
-    const pkgCwd = join(pkgRoot, 'src')
-    const functions = await getFunctionNamesInPackage(pkgCwd, IGNORE_DIRS)
+    const pkgRoot = join(PACKAGES_ROOT, pkgName)
+    const pkgSrc = join(pkgRoot, 'src')
+    const functions = await getFilesInPackage(pkgSrc, IGNORE_DIRS)
 
-    const pkg = {
+    metadata.packages[pkgName] = {
       name: pkgName,
-      dir: relative(ROOT_PATH, pkgRoot).replace(/\\/g, '/'),
+      dir: relative(ROOT, pkgRoot).replace(/\\/g, '/'),
     }
 
-    metadata.packages[pkgName] = pkg
-
-    await Promise.all(functions.map(async (name) => {
-      const mdPath = join(pkgCwd, name, 'index.md')
-
-      const fn = {
-        name,
-        package: pkg.name,
-      }
-
-      if (existsSync(join(pkgCwd, name, 'component.ts')))
-        fn.component = true
-      if (existsSync(join(pkgCwd, name, 'directive.ts')))
-        fn.directive = true
-      if (!existsSync(mdPath)) {
-        metadata.functions.push(fn)
-        return
-      }
-
-      fn.docs = `${DOCS_BASE_URL}/${pkg.name}/${name}/`
-      fn.md = true
-
-      const mdRaw = await fs.readFile(mdPath, 'utf-8')
-
-      const { content: md, data: frontmatter } = matter(mdRaw)
-      fn.category = frontmatter.category
-      let description = (
-        md
-          // normalize newlines
-          .replace(/\r\n/g, '\n')
-          // remove ::: tip blocks
-          .replace(/(:{3,}(?=[^:\n]*\n))[^\n]*\n[\s\S]*?\1 *(?=\n)/g, '')
-          // remove headers
-          .match(/#(?=\s).*\n+(.+?)(?:, |\. |\n|\.\n)/) || []
-      )[1] || ''
-
-      description = description.trim()
-      description = description.charAt(0).toLowerCase() + description.slice(1)
-      fn.description = description
-      metadata.functions.push(fn)
-    }))
+    await Promise.all(
+      functions.map(name =>
+        processFunction(pkgName, pkgSrc, name).then(fn =>
+          metadata.functions.push(fn),
+        ),
+      ),
+    )
   }
 
   metadata.functions.sort((a, b) => a.name.localeCompare(b.name))
@@ -77,7 +55,50 @@ async function buildProjectMetadata() {
   return metadata
 }
 
-async function getFunctionNamesInPackage(cwd, ignore = []) {
+async function processFunction(pkgName, pkgSrc, name) {
+  const fnDir = join(pkgSrc, name)
+  const mdPath = join(fnDir, 'index.md')
+
+  const fn = {
+    name,
+    package: pkgName,
+  }
+
+  if (existsSync(join(fnDir, 'component.ts')))
+    fn.component = true
+  if (existsSync(join(fnDir, 'directive.ts')))
+    fn.directive = true
+  if (!existsSync(mdPath))
+    return fn
+
+  fn.docs = `${DOCS_BASE_URL}/${pkgName}/${name}/`
+  fn.md = true
+
+  const mdRaw = await fs.readFile(mdPath, 'utf8')
+  const { content, data } = matter(mdRaw)
+
+  fn.category = data.category
+  fn.description = processDescription(content)
+
+  return fn
+}
+
+function processDescription(md) {
+  const normalized = md.replace(/\r\n/g, '\n')
+  const cleaned = normalized.replace(
+    /(:{3,}(?=[^:\n]*\n))[^\n]*\n[\s\S]*?\1 *(?=\n)/g,
+    '',
+  )
+
+  // First line after H1
+  const match = cleaned.match(/#(?=\s).*\n+(.+?)(?:, |\. |\n|\.\n)/)
+  let description = match?.[1] ?? ''
+
+  description = description.trim()
+  return description.charAt(0).toLowerCase() + description.slice(1)
+}
+
+async function getFilesInPackage(cwd, ignore = []) {
   const files = await glob('*', {
     cwd,
     onlyDirectories: true,
@@ -88,13 +109,5 @@ async function getFunctionNamesInPackage(cwd, ignore = []) {
       ...ignore,
     ],
   })
-  files.sort()
-  return files.map(path => path.endsWith('/') ? path.slice(0, -1) : path)
+  return files.map(path => path.endsWith('/') ? path.slice(0, -1) : path).sort()
 }
-
-async function writeMetadataToFile() {
-  const metadata = await buildProjectMetadata()
-  await fs.writeFile(OUTPUT_PATH, `${JSON.stringify(metadata, null, 2)}\n`)
-}
-
-writeMetadataToFile()

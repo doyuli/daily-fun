@@ -12,9 +12,9 @@
   ],
   "scripts": {
     "dev": "node scripts/dev.js",
-    "docs": "vitepress dev packages",
-    "docs:build": "vitepress build packages",
-    "docs:preview": "vitepress preview packages",
+    "dev:docs": "vitepress dev packages",
+    "build:docs": "pnpm update:meta && vitepress build packages",
+    "preview:docs": "vitepress preview packages",
     "demo": "pnpm --filter @daily-fun/demo dev",
     "build": "pnpm --filter './packages/**' run build",
     "build:watch": "pnpm --filter './packages/**' --parallel run build --watch",
@@ -22,7 +22,7 @@
     "test:unit": "vitest --project unit",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
-    "update": "node scripts/update.js",
+    "update:meta": "node scripts/update.js",
     "postinstall": "simple-git-hooks"
   },
   "devDependencies": {
