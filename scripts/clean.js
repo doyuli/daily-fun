@@ -51,7 +51,7 @@ async function clean() {
   for (const dir of nodeModulesPaths) {
     try {
       if (CONFIG.dryRun) {
-        console.log(`[mork] will delete ${dir}...`)
+        console.log(`[mock] will delete ${dir}...`)
       }
       else {
         console.log(`deleting ${path.relative(CONFIG.targetDir, dir)}...`)
@@ -66,7 +66,7 @@ async function clean() {
 
   const elapsed = ((Date.now() - startTime) / 1000).toFixed(1)
   if (CONFIG.dryRun) {
-    console.log(`mork completed, a total of ${nodeModulesPaths.length} ${CONFIG.target} were scanned`)
+    console.log(`mock completed, a total of ${nodeModulesPaths.length} ${CONFIG.target} were scanned`)
   }
   else {
     console.log(pico.green(`Deletion complete! Cleaned ${totalCount} ${CONFIG.target}, freeing ${formatFileSize(totalSize)}, took ${elapsed}s`))
