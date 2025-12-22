@@ -5,7 +5,7 @@ related: compileTemplate
 
 # compileTemplate
 
-<span v-pre>将字符串模板中的 `{{ ... }}` 代码片段在沙箱中执行，并以提供的上下文返回结果与错误信息。</span>
+将字符串模板代码片段在沙箱中执行，并以提供的上下文返回结果与错误信息。
 
 ## Usage
 
