@@ -12,15 +12,15 @@ export function MarkdownTransform(): Plugin {
       if (!id.match(/\.md\b/))
         return null
 
-      // docs/core/useResetableRef/index.md => [core, useResetableRef, index.md]
-      const [pkg, name, i] = id.split('/').slice(-3)
+      // packages/core/src/compileTemplate/index.md => [core, src, compileTemplate, index.md]
+      const [pkg, src, name, i] = id.split('/').slice(-4)
 
       if (packages.includes(pkg) && i === 'index.md') {
         const frontmatterEnds = code.indexOf('---\n\n')
         const firstHeader = code.search(/\n#{2,6}\s.+/)
         const sliceIndex = firstHeader < 0 ? frontmatterEnds < 0 ? 0 : frontmatterEnds + 4 : firstHeader
 
-        const { header, footer } = getFunctionMarkdown(pkg, name)
+        const { header, footer } = getFunctionMarkdown(pkg, src, name)
 
         if (header)
           code = code.slice(0, sliceIndex) + header + code.slice(sliceIndex)
@@ -37,11 +37,11 @@ export function MarkdownTransform(): Plugin {
 const GITHUB_BLOB_URL = 'https://github.com/doyuli/daily-fun/blob/main/packages'
 const DIR_SRC = resolve(__dirname, '../..')
 
-function getFunctionMarkdown(pkg: string, name: string) {
+function getFunctionMarkdown(pkg: string, src: string, name: string) {
   // https://github.com/doyuli/daily-fun/blob/main/packages/core/useResetableRef
-  const URL = `${GITHUB_BLOB_URL}/${pkg}/${name}`
+  const URL = `${GITHUB_BLOB_URL}/${pkg}/${src}/${name}`
   // daily-fun\docs\core\useResetableRef
-  const dirname = join(DIR_SRC, pkg, name)
+  const dirname = join(DIR_SRC, pkg, src, name)
   const demoPath = ['demo.vue'].find(i => existsSync(join(dirname, i)))
 
   // [Source](link) • [Demo](link) • [Docs](link)
