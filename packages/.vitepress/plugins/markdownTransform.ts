@@ -11,9 +11,8 @@ export function MarkdownTransform(): Plugin {
     async transform(code, id) {
       if (!id.match(/\.md\b/))
         return null
-
-      // packages/core/src/compileTemplate/index.md => [core, src, compileTemplate, index.md]
-      const [pkg, src, name, i] = id.split('/').slice(-4)
+      const normalized = id.replace(/\\/g, '/')
+      const [pkg, src, name, i] = normalized.split('/').slice(-4)
 
       if (packages.includes(pkg) && i === 'index.md') {
         const frontmatterEnds = code.indexOf('---\n\n')
@@ -22,7 +21,7 @@ export function MarkdownTransform(): Plugin {
 
         const { header, footer } = getFunctionMarkdown(pkg, src, name)
 
-        if (header)
+        if (header && !code.includes('<DemoContainer>'))
           code = code.slice(0, sliceIndex) + header + code.slice(sliceIndex)
 
         if (footer)
@@ -38,11 +37,9 @@ const GITHUB_BLOB_URL = 'https://github.com/doyuli/daily-fun/blob/main/packages'
 const DIR_SRC = resolve(__dirname, '../..')
 
 function getFunctionMarkdown(pkg: string, src: string, name: string) {
-  // https://github.com/doyuli/daily-fun/blob/main/packages/core/useResetableRef
   const URL = `${GITHUB_BLOB_URL}/${pkg}/${src}/${name}`
-  // daily-fun\docs\core\useResetableRef
-  const dirname = join(DIR_SRC, pkg, src, name)
-  const demoPath = ['demo.vue'].find(i => existsSync(join(dirname, i)))
+  const dir = join(DIR_SRC, pkg, src, name)
+  const demoPath = ['demo.vue'].find(i => existsSync(join(dir, i)))
 
   // [Source](link) • [Demo](link) • [Docs](link)
   const links = ([
@@ -57,19 +54,20 @@ function getFunctionMarkdown(pkg: string, src: string, name: string) {
   // ## Source
   const sourceSection = `## Source\n\n${links}\n`
 
-  // ## Demo
-  const demoSection = `
+  const demoSection = demoPath
+    ? `
 <script setup>
-import Demo from \'./${demoPath}\'
+import Demo from './demo.vue'
 </script>
 
 ## Demo
 
 <DemoContainer>
-<p class="demo-source-link"><a href="${URL}/${demoPath}" target="_blank">source</a></p>
+<p class="demo-source-link"><a href="${URL}/demo.vue" target="_blank">source</a></p>
 <Demo/>
 </DemoContainer>
 `
+    : ''
 
   const footer = sourceSection
 

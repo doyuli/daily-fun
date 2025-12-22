@@ -78,7 +78,7 @@ export default defineConfig({
 function getFunctionsSideBar() {
   const links: any[] = []
 
-  const categories = metadata.functions.map(func => func.category).filter(Boolean)
+  const categories = [...new Set(metadata.functions.map(func => func.category).filter(Boolean))]
 
   for (const category of categories) {
     const functions = metadata.functions.filter(i => i.category === category && i.md)
