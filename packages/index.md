@@ -11,7 +11,7 @@ hero:
     alt: DailyFun
   actions:
     - theme: brand
-      text: 开始使用
+      text: Get Started
       link: /guide/
 
     - theme: alt
@@ -43,5 +43,3 @@ features:
     details: Documentation of functions also come with interactive demos!
     icon: 🎪
 ---
-
-<Home />
