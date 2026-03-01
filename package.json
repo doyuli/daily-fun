@@ -2,7 +2,7 @@
   "name": "daily-fun",
   "type": "module",
   "version": "1.0.0",
-  "packageManager": "pnpm@10.6.5",
+  "packageManager": "pnpm@10.30.3",
   "description": "Interesting toolset",
   "author": "doyuli",
   "license": "ISC",
